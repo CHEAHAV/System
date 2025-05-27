@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCustomer));
             this.btnSearchCustomer = new System.Windows.Forms.Button();
-            this.txtSearchCustomer = new System.Windows.Forms.TextBox();
             this.dgvCustomer = new System.Windows.Forms.DataGridView();
             this.btnViewCustomer = new System.Windows.Forms.Button();
             this.btnUpdateCustomer = new System.Windows.Forms.Button();
@@ -42,6 +41,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.txtCusID = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomer)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,25 +51,13 @@
             // 
             this.btnSearchCustomer.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSearchCustomer.Image = ((System.Drawing.Image)(resources.GetObject("btnSearchCustomer.Image")));
-            this.btnSearchCustomer.Location = new System.Drawing.Point(465, 391);
+            this.btnSearchCustomer.Location = new System.Drawing.Point(440, 393);
             this.btnSearchCustomer.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
             this.btnSearchCustomer.Name = "btnSearchCustomer";
-            this.btnSearchCustomer.Size = new System.Drawing.Size(54, 65);
+            this.btnSearchCustomer.Size = new System.Drawing.Size(63, 65);
             this.btnSearchCustomer.TabIndex = 52;
             this.btnSearchCustomer.UseVisualStyleBackColor = true;
-            // 
-            // txtSearchCustomer
-            // 
-            this.txtSearchCustomer.Enabled = false;
-            this.txtSearchCustomer.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearchCustomer.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtSearchCustomer.Location = new System.Drawing.Point(320, 392);
-            this.txtSearchCustomer.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-            this.txtSearchCustomer.Multiline = true;
-            this.txtSearchCustomer.Name = "txtSearchCustomer";
-            this.txtSearchCustomer.Size = new System.Drawing.Size(200, 60);
-            this.txtSearchCustomer.TabIndex = 51;
-            this.txtSearchCustomer.Text = "Sreach";
+            this.btnSearchCustomer.Click += new System.EventHandler(this.btnSearchCustomer_Click);
             // 
             // dgvCustomer
             // 
@@ -78,6 +68,7 @@
             this.dgvCustomer.Name = "dgvCustomer";
             this.dgvCustomer.Size = new System.Drawing.Size(508, 265);
             this.dgvCustomer.TabIndex = 50;
+            this.dgvCustomer.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomer_CellClick);
             // 
             // btnViewCustomer
             // 
@@ -106,6 +97,7 @@
             this.btnUpdateCustomer.Text = "Update";
             this.btnUpdateCustomer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnUpdateCustomer.UseVisualStyleBackColor = true;
+            this.btnUpdateCustomer.Click += new System.EventHandler(this.btnUpdateCustomer_Click);
             // 
             // btnDeleteCustomer
             // 
@@ -120,6 +112,7 @@
             this.btnDeleteCustomer.Text = "Delete";
             this.btnDeleteCustomer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnDeleteCustomer.UseVisualStyleBackColor = true;
+            this.btnDeleteCustomer.Click += new System.EventHandler(this.btnDeleteCustomer_Click);
             // 
             // btnExitCustomer
             // 
@@ -149,11 +142,12 @@
             this.btnAddCustomer.Text = "ADD";
             this.btnAddCustomer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAddCustomer.UseVisualStyleBackColor = true;
+            this.btnAddCustomer.Click += new System.EventHandler(this.btnAddCustomer_Click);
             // 
             // txtCustomerContact
             // 
             this.txtCustomerContact.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCustomerContact.Location = new System.Drawing.Point(169, 194);
+            this.txtCustomerContact.Location = new System.Drawing.Point(169, 226);
             this.txtCustomerContact.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtCustomerContact.Multiline = true;
             this.txtCustomerContact.Name = "txtCustomerContact";
@@ -162,8 +156,8 @@
             // 
             // txtCustomerName
             // 
-            this.txtCustomerName.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCustomerName.Location = new System.Drawing.Point(169, 104);
+            this.txtCustomerName.Font = new System.Drawing.Font("Khmer OS Battambang", 15.75F);
+            this.txtCustomerName.Location = new System.Drawing.Point(169, 136);
             this.txtCustomerName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtCustomerName.Multiline = true;
             this.txtCustomerName.Name = "txtCustomerName";
@@ -174,7 +168,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(7, 208);
+            this.label3.Location = new System.Drawing.Point(7, 240);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(106, 25);
             this.label3.TabIndex = 42;
@@ -185,7 +179,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(24, 118);
+            this.label4.Location = new System.Drawing.Point(24, 150);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(89, 25);
             this.label4.TabIndex = 41;
@@ -203,14 +197,49 @@
             this.label2.Text = "Customer Information";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // txtCusID
+            // 
+            this.txtCusID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCusID.Font = new System.Drawing.Font("Khmer OS Battambang", 15.75F);
+            this.txtCusID.Location = new System.Drawing.Point(169, 68);
+            this.txtCusID.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtCusID.Multiline = true;
+            this.txtCusID.Name = "txtCusID";
+            this.txtCusID.ReadOnly = true;
+            this.txtCusID.Size = new System.Drawing.Size(75, 42);
+            this.txtCusID.TabIndex = 54;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(24, 82);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 25);
+            this.label1.TabIndex = 53;
+            this.label1.Text = "ID : ";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.Location = new System.Drawing.Point(241, 396);
+            this.txtSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtSearch.Multiline = true;
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(202, 57);
+            this.txtSearch.TabIndex = 55;
+            // 
             // frmCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(540, 816);
             this.ControlBox = false;
+            this.Controls.Add(this.txtSearch);
+            this.Controls.Add(this.txtCusID);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSearchCustomer);
-            this.Controls.Add(this.txtSearchCustomer);
             this.Controls.Add(this.dgvCustomer);
             this.Controls.Add(this.btnViewCustomer);
             this.Controls.Add(this.btnUpdateCustomer);
@@ -237,7 +266,6 @@
         #endregion
 
         private System.Windows.Forms.Button btnSearchCustomer;
-        private System.Windows.Forms.TextBox txtSearchCustomer;
         private System.Windows.Forms.DataGridView dgvCustomer;
         private System.Windows.Forms.Button btnViewCustomer;
         private System.Windows.Forms.Button btnUpdateCustomer;
@@ -249,6 +277,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtCusID;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtSearch;
     }
 }
 

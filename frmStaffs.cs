@@ -45,6 +45,23 @@ namespace Systems
             dap.Fill(dt);
 
             dgvStaff.DataSource = dt;
+
+
+            dgvStaff.ColumnHeadersDefaultCellStyle.Font = new Font("Century Schoolbook", 12, FontStyle.Bold);
+            dgvStaff.DefaultCellStyle.Font = new Font("Khmer OS Battambang", 12, FontStyle.Regular);
+            dgvStaff.Columns["staffID"].Width = 70;
+            dgvStaff.Columns["FullName"].Width = 100;
+            dgvStaff.Columns["Gen"].Width = 50;
+            dgvStaff.Columns["Dob"].DefaultCellStyle.Format = "dd/MM/yyyy";
+
+            DataGridViewImageColumn img = new DataGridViewImageColumn();
+            img = (DataGridViewImageColumn)dgvStaff.Columns["Photos"];
+            img.ImageLayout = DataGridViewImageCellLayout.Stretch;
+
+            //foreach (DataGridViewColumn col in dgvStaff.Columns)
+            //{ 
+            //    col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            //}
         }
 
         public void OnChange(object sender, SqlNotificationEventArgs e)
@@ -122,6 +139,98 @@ namespace Systems
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void dgvStaff_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int i;
+            if (dgvStaff.RowCount > 0)
+            {
+                i = e.RowIndex;
+                if (i < 0) return;
+
+                DataGridViewRow row = dgvStaff.Rows[i];
+                txtStaffId.Text = row.Cells["staffID"].Value.ToString();
+                txtStaffFullName.Text = row.Cells["FullName"].Value.ToString();
+                if (row.Cells["Gen"].Value.ToString() == "F")
+                {
+                    radFemale.Checked = true;
+                }
+                else
+                {
+                    radMale.Checked = true;
+                }
+                dtpdob.Value = DateTime.Parse(row.Cells["Dob"].Value.ToString());
+                //dtpdob.CustomFormat = "dd/MM/yyyy";
+                //dtpdob.Text = row.Cells["Dob"].Value.ToString();
+                
+                cmbStaffPosition.Text = row.Cells["Position"].Value.ToString();
+                txtStaffSalary.Text = row.Cells["Salary"].Value.ToString();
+                
+                if (row.Cells["Photos"].Value != DBNull.Value)
+                {
+                    byte[] img = (byte[])row.Cells["Photos"].Value;
+                    MemoryStream ms = new MemoryStream(img);
+                    picStaff.Image = Image.FromStream(ms);
+                }
+                else
+                {
+                    picStaff.Image = null;
+                }
+            }
+        }
+
+        private void btnUpdateStaff_Click(object sender, EventArgs e)
+        {
+            var Salary = Decimal.Parse(txtStaffSalary.Text, NumberStyles.Currency);
+            com = new SqlCommand("spUpdateStaffs", db.con);
+            com.CommandType = CommandType.StoredProcedure;
+
+            com.Parameters.AddWithValue("@staffID", txtStaffId.Text);
+            com.Parameters.AddWithValue("@FullName", txtStaffFullName.Text);
+
+            if (radFemale.Checked == true)
+            {
+                com.Parameters.AddWithValue("@Gen", "F");
+            }
+            else
+            {
+                com.Parameters.AddWithValue("@Gen", "M");
+            }
+
+            com.Parameters.AddWithValue("@Dob", dtpdob.Value);
+            com.Parameters.AddWithValue("@Position", cmbStaffPosition.Text);
+            com.Parameters.AddWithValue("@Salary", Salary);
+            com.Parameters.AddWithValue("@Stopwork", 0);
+
+            if (fp != null)
+            {
+                photos = File.ReadAllBytes(fp);
+                com.Parameters.AddWithValue("@Photos", photos);
+            }
+            com.ExecuteNonQuery();
+            fp = null;
+            MessageBox.Show("Staff Update Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnDeleteStaff_Click(object sender, EventArgs e)
+        {
+            
+            DialogResult result = MessageBox.Show("Do you want to delete it?", "Confirmation",
+                                       MessageBoxButtons.YesNo,
+                                       MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                com = new SqlCommand("spDeleteStaffs", db.con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@staffID", txtStaffId.Text);
+                com.ExecuteNonQuery();
+                MessageBox.Show("Staff Deleted Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                return;
+            }
         }
     }
 }

@@ -74,12 +74,13 @@
             // 
             // dgvStaff
             // 
-            this.dgvStaff.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvStaff.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvStaff.Location = new System.Drawing.Point(19, 520);
             this.dgvStaff.Name = "dgvStaff";
+            this.dgvStaff.RowTemplate.Height = 80;
             this.dgvStaff.Size = new System.Drawing.Size(770, 224);
             this.dgvStaff.TabIndex = 58;
+            this.dgvStaff.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStaff_CellClick);
             // 
             // btnViewStaff
             // 
@@ -108,6 +109,7 @@
             this.btnUpdateStaff.Text = "Update";
             this.btnUpdateStaff.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnUpdateStaff.UseVisualStyleBackColor = true;
+            this.btnUpdateStaff.Click += new System.EventHandler(this.btnUpdateStaff_Click);
             // 
             // btnDeleteStaff
             // 
@@ -122,6 +124,7 @@
             this.btnDeleteStaff.Text = "Delete";
             this.btnDeleteStaff.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnDeleteStaff.UseVisualStyleBackColor = true;
+            this.btnDeleteStaff.Click += new System.EventHandler(this.btnDeleteStaff_Click);
             // 
             // btnStaffBrows
             // 
@@ -240,7 +243,7 @@
             // 
             // txtStaffFullName
             // 
-            this.txtStaffFullName.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtStaffFullName.Font = new System.Drawing.Font("Khmer OS Battambang", 15.75F);
             this.txtStaffFullName.Location = new System.Drawing.Point(260, 112);
             this.txtStaffFullName.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtStaffFullName.Multiline = true;
@@ -359,7 +362,7 @@
             this.dtpdob.Name = "dtpdob";
             this.dtpdob.Size = new System.Drawing.Size(260, 31);
             this.dtpdob.TabIndex = 61;
-            this.dtpdob.Value = new System.DateTime(2025, 5, 5, 0, 0, 0, 0);
+            this.dtpdob.Value = new System.DateTime(2025, 5, 21, 0, 0, 0, 0);
             // 
             // btnExit
             // 
@@ -378,12 +381,12 @@
             // 
             // txtSearch
             // 
-            this.txtSearch.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearch.Location = new System.Drawing.Point(564, 361);
+            this.txtSearch.Font = new System.Drawing.Font("Khmer OS Battambang", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.Location = new System.Drawing.Point(501, 361);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.txtSearch.Multiline = true;
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(165, 56);
+            this.txtSearch.Size = new System.Drawing.Size(228, 56);
             this.txtSearch.TabIndex = 60;
             // 
             // frmStaffs

@@ -36,7 +36,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtOrdersStaffName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtOrdersStaffID = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -48,8 +47,11 @@
             this.btnDeleteOrders = new System.Windows.Forms.Button();
             this.btnExitOrder = new System.Windows.Forms.Button();
             this.btnAddOrders = new System.Windows.Forms.Button();
-            this.txtOrdersCustomerID = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.cboStaffID = new System.Windows.Forms.ComboBox();
+            this.cboCusID = new System.Windows.Forms.ComboBox();
+            this.txtOrdersCode = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrders)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,12 +73,14 @@
             this.dgvOrders.Location = new System.Drawing.Point(34, 493);
             this.dgvOrders.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dgvOrders.Name = "dgvOrders";
+            this.dgvOrders.RowTemplate.Height = 30;
             this.dgvOrders.Size = new System.Drawing.Size(594, 265);
             this.dgvOrders.TabIndex = 96;
+            this.dgvOrders.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrders_CellClick);
             // 
             // dateOrders
             // 
-            this.dateOrders.Location = new System.Drawing.Point(230, 79);
+            this.dateOrders.Location = new System.Drawing.Point(230, 133);
             this.dateOrders.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dateOrders.Name = "dateOrders";
             this.dateOrders.Size = new System.Drawing.Size(238, 31);
@@ -85,10 +89,11 @@
             // txtOrdersCustomerName
             // 
             this.txtOrdersCustomerName.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtOrdersCustomerName.Location = new System.Drawing.Point(230, 359);
+            this.txtOrdersCustomerName.Location = new System.Drawing.Point(230, 378);
             this.txtOrdersCustomerName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtOrdersCustomerName.Multiline = true;
             this.txtOrdersCustomerName.Name = "txtOrdersCustomerName";
+            this.txtOrdersCustomerName.ReadOnly = true;
             this.txtOrdersCustomerName.Size = new System.Drawing.Size(170, 42);
             this.txtOrdersCustomerName.TabIndex = 89;
             // 
@@ -96,7 +101,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(22, 362);
+            this.label6.Location = new System.Drawing.Point(22, 381);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(191, 25);
             this.label6.TabIndex = 88;
@@ -106,10 +111,11 @@
             // txtOrdersStaffName
             // 
             this.txtOrdersStaffName.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtOrdersStaffName.Location = new System.Drawing.Point(230, 215);
+            this.txtOrdersStaffName.Location = new System.Drawing.Point(230, 258);
             this.txtOrdersStaffName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtOrdersStaffName.Multiline = true;
             this.txtOrdersStaffName.Name = "txtOrdersStaffName";
+            this.txtOrdersStaffName.ReadOnly = true;
             this.txtOrdersStaffName.Size = new System.Drawing.Size(170, 42);
             this.txtOrdersStaffName.TabIndex = 86;
             // 
@@ -117,28 +123,18 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(12, 215);
+            this.label5.Location = new System.Drawing.Point(12, 258);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(203, 25);
             this.label5.TabIndex = 84;
             this.label5.Text = "Staff\'s Full Name : ";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // txtOrdersStaffID
-            // 
-            this.txtOrdersStaffID.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtOrdersStaffID.Location = new System.Drawing.Point(230, 140);
-            this.txtOrdersStaffID.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtOrdersStaffID.Multiline = true;
-            this.txtOrdersStaffID.Name = "txtOrdersStaffID";
-            this.txtOrdersStaffID.Size = new System.Drawing.Size(50, 42);
-            this.txtOrdersStaffID.TabIndex = 83;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(97, 140);
+            this.label3.Location = new System.Drawing.Point(97, 194);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(108, 25);
             this.label3.TabIndex = 82;
@@ -149,7 +145,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(47, 82);
+            this.label4.Location = new System.Drawing.Point(47, 136);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(164, 25);
             this.label4.TabIndex = 81;
@@ -170,7 +166,7 @@
             // txtOrderTotal
             // 
             this.txtOrderTotal.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtOrderTotal.Location = new System.Drawing.Point(230, 437);
+            this.txtOrderTotal.Location = new System.Drawing.Point(230, 443);
             this.txtOrderTotal.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtOrderTotal.Multiline = true;
             this.txtOrderTotal.Name = "txtOrderTotal";
@@ -181,7 +177,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(121, 450);
+            this.label7.Location = new System.Drawing.Point(121, 456);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(82, 25);
             this.label7.TabIndex = 99;
@@ -219,14 +215,15 @@
             this.btnUpdateOrders.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUpdateOrders.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateOrders.Image")));
             this.btnUpdateOrders.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUpdateOrders.Location = new System.Drawing.Point(493, 191);
+            this.btnUpdateOrders.Location = new System.Drawing.Point(483, 191);
             this.btnUpdateOrders.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnUpdateOrders.Name = "btnUpdateOrders";
-            this.btnUpdateOrders.Size = new System.Drawing.Size(135, 66);
+            this.btnUpdateOrders.Size = new System.Drawing.Size(145, 66);
             this.btnUpdateOrders.TabIndex = 94;
             this.btnUpdateOrders.Text = "Update";
             this.btnUpdateOrders.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnUpdateOrders.UseVisualStyleBackColor = true;
+            this.btnUpdateOrders.Click += new System.EventHandler(this.btnUpdateOrders_Click);
             // 
             // btnDeleteOrders
             // 
@@ -272,26 +269,56 @@
             this.btnAddOrders.UseVisualStyleBackColor = true;
             this.btnAddOrders.Click += new System.EventHandler(this.btnAddOrders_Click);
             // 
-            // txtOrdersCustomerID
-            // 
-            this.txtOrdersCustomerID.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtOrdersCustomerID.Location = new System.Drawing.Point(230, 285);
-            this.txtOrdersCustomerID.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtOrdersCustomerID.Multiline = true;
-            this.txtOrdersCustomerID.Name = "txtOrdersCustomerID";
-            this.txtOrdersCustomerID.Size = new System.Drawing.Size(170, 42);
-            this.txtOrdersCustomerID.TabIndex = 102;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(22, 288);
+            this.label1.Location = new System.Drawing.Point(22, 326);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(157, 25);
             this.label1.TabIndex = 101;
             this.label1.Text = "Customer ID : ";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cboStaffID
+            // 
+            this.cboStaffID.FormattingEnabled = true;
+            this.cboStaffID.Location = new System.Drawing.Point(230, 194);
+            this.cboStaffID.Name = "cboStaffID";
+            this.cboStaffID.Size = new System.Drawing.Size(121, 32);
+            this.cboStaffID.TabIndex = 1;
+            this.cboStaffID.SelectionChangeCommitted += new System.EventHandler(this.cboStaffID_SelectionChangeCommitted);
+            // 
+            // cboCusID
+            // 
+            this.cboCusID.FormattingEnabled = true;
+            this.cboCusID.Location = new System.Drawing.Point(228, 326);
+            this.cboCusID.Name = "cboCusID";
+            this.cboCusID.Size = new System.Drawing.Size(121, 32);
+            this.cboCusID.TabIndex = 102;
+            this.cboCusID.SelectionChangeCommitted += new System.EventHandler(this.cboCusID_SelectionChangeCommitted);
+            // 
+            // txtOrdersCode
+            // 
+            this.txtOrdersCode.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtOrdersCode.Location = new System.Drawing.Point(232, 62);
+            this.txtOrdersCode.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtOrdersCode.Multiline = true;
+            this.txtOrdersCode.Name = "txtOrdersCode";
+            this.txtOrdersCode.ReadOnly = true;
+            this.txtOrdersCode.Size = new System.Drawing.Size(100, 42);
+            this.txtOrdersCode.TabIndex = 104;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(128, 75);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(79, 25);
+            this.label8.TabIndex = 103;
+            this.label8.Text = "Code : ";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // frmOrders
             // 
@@ -299,7 +326,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(666, 852);
             this.ControlBox = false;
-            this.Controls.Add(this.txtOrdersCustomerID);
+            this.Controls.Add(this.txtOrdersCode);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.cboCusID);
+            this.Controls.Add(this.cboStaffID);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtOrderTotal);
             this.Controls.Add(this.label7);
@@ -316,7 +346,6 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtOrdersStaffName);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtOrdersStaffID);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
@@ -347,13 +376,15 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtOrdersStaffName;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtOrdersStaffID;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtOrderTotal;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtOrdersCustomerID;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cboStaffID;
+        private System.Windows.Forms.ComboBox cboCusID;
+        private System.Windows.Forms.TextBox txtOrdersCode;
+        private System.Windows.Forms.Label label8;
     }
 }

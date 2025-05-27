@@ -15,54 +15,77 @@ namespace Systems
     {
 
         Database db = new Database();
-        SqlCommand com;
-        SqlDependency dep;
         SqlDataAdapter dap;
         DataTable dt;
+        SqlCommand com;
 
         public frmImports()
         {
             InitializeComponent();
             db.SystemConnection();
-            LoadData();
-        }
-
-        public void LoadData()
-        {
-            dgvImports.DataSource = null;
-            com = new SqlCommand("spGetAllImports", db.con);
-            com.CommandType = CommandType.StoredProcedure;
-
-            dep = new SqlDependency(com);
-            dep.OnChange += new OnChangeEventHandler(OnChange);
-
-            dap = new SqlDataAdapter(com);
-            dt = new DataTable();
-            dap.Fill(dt);
-
-            dgvImports.DataSource = dt;
-        }
-
-        public void OnChange(object sender, SqlNotificationEventArgs e)
-        {
-            if ( this.InvokeRequired)
-            {
-                dgvImports.BeginInvoke(new MethodInvoker(LoadData));
-            }
-            else
-            {
-                LoadData();
-            }
         }
 
         private void frmImports_Load(object sender, EventArgs e)
         {
+            dap = new SqlDataAdapter("SELECT * FROM fnGetAllStaffs()", db.con);
+            dt = new DataTable();
+            dap.Fill(dt);
 
+            cboStaffID.DataSource = null;
+            cboStaffID.Items.Clear();
+
+            cboStaffID.DataSource = dt;
+            cboStaffID.DisplayMember = "staffID";
+            cboStaffID.ValueMember = "fullName";
+
+            cboStaffID.Text = null;
+
+            dap = new SqlDataAdapter("SELECT * FROM fnGetAllSuppliers()", db.con);
+            dt = new DataTable();
+            dap.Fill(dt);
+
+            cboSupplierName.DataSource = null;
+            cboSupplierName.Items.Clear();
+
+            cboSupplierName.DataSource = dt;
+            cboSupplierName.DisplayMember = "Supplier";
+            cboSupplierName.ValueMember = "SupID";
+
+            cboSupplierName.Text = null;
         }
 
-        private void btnExitImports_Click(object sender, EventArgs e)
+        private void btnExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
+        }
+
+        private void cboStaffID_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            txtStaffName.Text = cboStaffID.SelectedValue.ToString();
+        }
+
+        private void cboSupplierName_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            txtSupplierID.Text = cboSupplierName.SelectedValue.ToString();
+        }
+
+        private void txtProductCode_TextChanged(object sender, EventArgs e)
+        {
+            com = new SqlCommand("SELECT ProName FROM tb_Products WHERE ProCode ='" +txtProductCode.Text+"'",db.con);
+            SqlDataReader dr = com.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    txtProductName.Text = dr["ProName"].ToString();
+                }
+            }
+            else
+            {
+                txtProductName.Text = null;
+            }
+            dr.Dispose();
+            com.Dispose();
         }
     }
 }

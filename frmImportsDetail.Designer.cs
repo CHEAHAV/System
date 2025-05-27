@@ -50,7 +50,7 @@
             // 
             this.dgvImportsDetail.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvImportsDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvImportsDetail.Location = new System.Drawing.Point(4, 76);
+            this.dgvImportsDetail.Location = new System.Drawing.Point(12, 344);
             this.dgvImportsDetail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dgvImportsDetail.Name = "dgvImportsDetail";
             this.dgvImportsDetail.Size = new System.Drawing.Size(883, 364);
@@ -61,7 +61,7 @@
             this.btnExitImportsDetail.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExitImportsDetail.Image = ((System.Drawing.Image)(resources.GetObject("btnExitImportsDetail.Image")));
             this.btnExitImportsDetail.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExitImportsDetail.Location = new System.Drawing.Point(752, 449);
+            this.btnExitImportsDetail.Location = new System.Drawing.Point(752, 718);
             this.btnExitImportsDetail.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnExitImportsDetail.Name = "btnExitImportsDetail";
             this.btnExitImportsDetail.Size = new System.Drawing.Size(135, 66);
@@ -75,7 +75,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(892, 520);
+            this.ClientSize = new System.Drawing.Size(892, 799);
             this.ControlBox = false;
             this.Controls.Add(this.btnExitImportsDetail);
             this.Controls.Add(this.label2);
