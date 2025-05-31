@@ -58,6 +58,8 @@
             this.txtUnitPrice = new System.Windows.Forms.TextBox();
             this.txtTotal = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.txtImportCode = new System.Windows.Forms.TextBox();
+            this.ImportCode = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvImports)).BeginInit();
             this.SuspendLayout();
             // 
@@ -82,6 +84,7 @@
             this.btnSearchImports.Size = new System.Drawing.Size(64, 66);
             this.btnSearchImports.TabIndex = 103;
             this.btnSearchImports.UseVisualStyleBackColor = true;
+            this.btnSearchImports.Click += new System.EventHandler(this.btnSearchImports_Click);
             // 
             // txtSearch
             // 
@@ -104,6 +107,7 @@
             this.dgvImports.RowHeadersWidth = 50;
             this.dgvImports.Size = new System.Drawing.Size(820, 206);
             this.dgvImports.TabIndex = 101;
+            this.dgvImports.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvImports_CellClick);
             // 
             // btnView
             // 
@@ -175,11 +179,12 @@
             this.btnAdd.Text = "ADD";
             this.btnAdd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(46, 90);
+            this.label1.Location = new System.Drawing.Point(382, 97);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(107, 24);
             this.label1.TabIndex = 104;
@@ -187,7 +192,7 @@
             // 
             // dateImportDate
             // 
-            this.dateImportDate.Location = new System.Drawing.Point(171, 85);
+            this.dateImportDate.Location = new System.Drawing.Point(507, 92);
             this.dateImportDate.Name = "dateImportDate";
             this.dateImportDate.Size = new System.Drawing.Size(267, 31);
             this.dateImportDate.TabIndex = 105;
@@ -319,6 +324,7 @@
             this.txtQty.Name = "txtQty";
             this.txtQty.Size = new System.Drawing.Size(93, 31);
             this.txtQty.TabIndex = 120;
+            this.txtQty.TextChanged += new System.EventHandler(this.txtQty_TextChanged);
             // 
             // txtUnitPrice
             // 
@@ -326,13 +332,16 @@
             this.txtUnitPrice.Name = "txtUnitPrice";
             this.txtUnitPrice.Size = new System.Drawing.Size(135, 31);
             this.txtUnitPrice.TabIndex = 121;
+            this.txtUnitPrice.TextChanged += new System.EventHandler(this.txtUnitPrice_TextChanged);
             // 
             // txtTotal
             // 
             this.txtTotal.Location = new System.Drawing.Point(507, 744);
             this.txtTotal.Name = "txtTotal";
+            this.txtTotal.ReadOnly = true;
             this.txtTotal.Size = new System.Drawing.Size(135, 31);
             this.txtTotal.TabIndex = 123;
+            this.txtTotal.TextChanged += new System.EventHandler(this.txtTotal_TextChanged);
             // 
             // label11
             // 
@@ -343,12 +352,31 @@
             this.label11.TabIndex = 122;
             this.label11.Text = "Total : ";
             // 
+            // txtImportCode
+            // 
+            this.txtImportCode.Location = new System.Drawing.Point(171, 94);
+            this.txtImportCode.Name = "txtImportCode";
+            this.txtImportCode.ReadOnly = true;
+            this.txtImportCode.Size = new System.Drawing.Size(93, 31);
+            this.txtImportCode.TabIndex = 125;
+            // 
+            // ImportCode
+            // 
+            this.ImportCode.AutoSize = true;
+            this.ImportCode.Location = new System.Drawing.Point(93, 101);
+            this.ImportCode.Name = "ImportCode";
+            this.ImportCode.Size = new System.Drawing.Size(60, 24);
+            this.ImportCode.TabIndex = 124;
+            this.ImportCode.Text = "Code : ";
+            // 
             // frmImports
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(849, 800);
             this.ControlBox = false;
+            this.Controls.Add(this.txtImportCode);
+            this.Controls.Add(this.ImportCode);
             this.Controls.Add(this.txtTotal);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.txtUnitPrice);
@@ -420,5 +448,7 @@
         private System.Windows.Forms.TextBox txtUnitPrice;
         private System.Windows.Forms.TextBox txtTotal;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txtImportCode;
+        private System.Windows.Forms.Label ImportCode;
     }
 }

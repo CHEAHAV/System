@@ -88,7 +88,7 @@
             // 
             // txtOrdersCustomerName
             // 
-            this.txtOrdersCustomerName.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtOrdersCustomerName.Font = new System.Drawing.Font("Khmer OS Battambang", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtOrdersCustomerName.Location = new System.Drawing.Point(230, 378);
             this.txtOrdersCustomerName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtOrdersCustomerName.Multiline = true;
@@ -110,7 +110,7 @@
             // 
             // txtOrdersStaffName
             // 
-            this.txtOrdersStaffName.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtOrdersStaffName.Font = new System.Drawing.Font("Khmer OS Battambang", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtOrdersStaffName.Location = new System.Drawing.Point(230, 258);
             this.txtOrdersStaffName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtOrdersStaffName.Multiline = true;

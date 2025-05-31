@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace Systems
 {
@@ -99,6 +100,7 @@ namespace Systems
             }
             else
             { 
+                txtPaymentCode.Clear();
                 datePayment.Text = string.Empty;
                 txtStaffID.Text = string.Empty;
                 txtPaymentStaffName.Clear();
@@ -110,7 +112,19 @@ namespace Systems
 
         private void btnAddPayment_Click(object sender, EventArgs e)
         {
+            com = new SqlCommand("spsetPayments", db.con);
+            com.CommandType = CommandType.StoredProcedure;
 
+            var amount = Decimal.Parse(txtpaymentAmount.Text, NumberStyles.Currency);
+
+            com.Parameters.AddWithValue("@PayDate", datePayment.Value);
+            com.Parameters.AddWithValue("@StaffID", txtStaffID.Text);
+            com.Parameters.AddWithValue("@FullName", txtPaymentStaffName.Text);
+            com.Parameters.AddWithValue("@OrdCode", cboInvoiceCode.Text);
+            com.Parameters.AddWithValue("@Amount", amount);
+            com.ExecuteNonQuery();
+
+            MessageBox.Show("Payment Add success...!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void cboInvoiceCode_TextChanged(object sender, EventArgs e)
@@ -152,6 +166,67 @@ namespace Systems
         private void cboInvoiceCode_SelectionChangeCommitted(object sender, EventArgs e)
         {
             txtpaymentAmount.Text = "$  " + cboInvoiceCode.SelectedValue.ToString();
+        }
+
+        private void btnDeletePayment_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Do you want to delete it?", "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (result == DialogResult.OK)
+            {
+                com = new SqlCommand("spDeletePayments", db.con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@PayCode", txtPaymentCode.Text);
+                com.ExecuteNonQuery();
+
+                MessageBox.Show("You deleted...!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                txtPaymentCode.Clear();
+                datePayment.Text = string.Empty;
+                txtStaffID.Text = string.Empty;
+                txtPaymentStaffName.Clear();
+                cboInvoiceCode.Text = string.Empty;
+                txtpaymentAmount.Clear();
+            }
+            else
+            {
+                MessageBox.Show("You cancel delete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+        }
+
+        private void btnUpdatePayment_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Do you want to update it?", "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (result == DialogResult.OK)
+            {
+                com = new SqlCommand("spUpdatePayments", db.con);
+                com.CommandType = CommandType.StoredProcedure;
+
+                var amount = Decimal.Parse(txtpaymentAmount.Text, NumberStyles.Currency);
+
+                com.Parameters.AddWithValue("@PayCode", txtPaymentCode.Text);
+                com.Parameters.AddWithValue("@PayDate", datePayment.Value);
+                com.Parameters.AddWithValue("@StaffID", txtStaffID.Text);
+                com.Parameters.AddWithValue("@FullName", txtPaymentStaffName.Text);
+                com.Parameters.AddWithValue("@OrdCode", cboInvoiceCode.Text);
+                com.Parameters.AddWithValue("@Amount", amount);
+                com.ExecuteNonQuery();
+
+
+                MessageBox.Show("Update success...!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtPaymentCode.Clear();
+                datePayment.Text = string.Empty;
+                txtStaffID.Text = string.Empty;
+                txtPaymentStaffName.Clear();
+                cboInvoiceCode.Text = string.Empty;
+                txtpaymentAmount.Clear();
+
+            }
+            else
+            {
+                MessageBox.Show("You are cancel update...!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
         }
     }
 }

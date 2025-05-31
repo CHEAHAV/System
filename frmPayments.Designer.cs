@@ -103,6 +103,7 @@
             this.btnUpdatePayment.Text = "Update";
             this.btnUpdatePayment.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnUpdatePayment.UseVisualStyleBackColor = true;
+            this.btnUpdatePayment.Click += new System.EventHandler(this.btnUpdatePayment_Click);
             // 
             // btnDeletePayment
             // 
@@ -117,6 +118,7 @@
             this.btnDeletePayment.Text = "Delete";
             this.btnDeletePayment.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnDeletePayment.UseVisualStyleBackColor = true;
+            this.btnDeletePayment.Click += new System.EventHandler(this.btnDeletePayment_Click);
             // 
             // btnExitPayment
             // 
