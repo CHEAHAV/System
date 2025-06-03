@@ -32,10 +32,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnSearchImports = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
-            this.dgvImports = new System.Windows.Forms.DataGridView();
             this.btnView = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnRemove = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -60,7 +59,8 @@
             this.label11 = new System.Windows.Forms.Label();
             this.txtImportCode = new System.Windows.Forms.TextBox();
             this.ImportCode = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvImports)).BeginInit();
+            this.lisImport = new System.Windows.Forms.ListView();
+            this.btnSave = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label2
@@ -97,24 +97,12 @@
             this.txtSearch.Size = new System.Drawing.Size(195, 51);
             this.txtSearch.TabIndex = 102;
             // 
-            // dgvImports
-            // 
-            this.dgvImports.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvImports.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvImports.Location = new System.Drawing.Point(14, 510);
-            this.dgvImports.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dgvImports.Name = "dgvImports";
-            this.dgvImports.RowHeadersWidth = 50;
-            this.dgvImports.Size = new System.Drawing.Size(820, 206);
-            this.dgvImports.TabIndex = 101;
-            this.dgvImports.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvImports_CellClick);
-            // 
             // btnView
             // 
             this.btnView.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnView.Image = ((System.Drawing.Image)(resources.GetObject("btnView.Image")));
             this.btnView.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnView.Location = new System.Drawing.Point(685, 362);
+            this.btnView.Location = new System.Drawing.Point(684, 275);
             this.btnView.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnView.Name = "btnView";
             this.btnView.Size = new System.Drawing.Size(150, 66);
@@ -137,19 +125,20 @@
             this.btnUpdate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnUpdate.UseVisualStyleBackColor = true;
             // 
-            // btnDelete
+            // btnRemove
             // 
-            this.btnDelete.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
-            this.btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDelete.Location = new System.Drawing.Point(390, 440);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(150, 66);
-            this.btnDelete.TabIndex = 98;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnRemove.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemove.Image = ((System.Drawing.Image)(resources.GetObject("btnRemove.Image")));
+            this.btnRemove.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRemove.Location = new System.Drawing.Point(390, 440);
+            this.btnRemove.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(150, 66);
+            this.btnRemove.TabIndex = 98;
+            this.btnRemove.Text = "Remove";
+            this.btnRemove.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnExit
             // 
@@ -324,7 +313,6 @@
             this.txtQty.Name = "txtQty";
             this.txtQty.Size = new System.Drawing.Size(93, 31);
             this.txtQty.TabIndex = 120;
-            this.txtQty.TextChanged += new System.EventHandler(this.txtQty_TextChanged);
             // 
             // txtUnitPrice
             // 
@@ -332,7 +320,6 @@
             this.txtUnitPrice.Name = "txtUnitPrice";
             this.txtUnitPrice.Size = new System.Drawing.Size(135, 31);
             this.txtUnitPrice.TabIndex = 121;
-            this.txtUnitPrice.TextChanged += new System.EventHandler(this.txtUnitPrice_TextChanged);
             // 
             // txtTotal
             // 
@@ -341,7 +328,6 @@
             this.txtTotal.ReadOnly = true;
             this.txtTotal.Size = new System.Drawing.Size(135, 31);
             this.txtTotal.TabIndex = 123;
-            this.txtTotal.TextChanged += new System.EventHandler(this.txtTotal_TextChanged);
             // 
             // label11
             // 
@@ -369,12 +355,38 @@
             this.ImportCode.TabIndex = 124;
             this.ImportCode.Text = "Code : ";
             // 
+            // lisImport
+            // 
+            this.lisImport.HideSelection = false;
+            this.lisImport.Location = new System.Drawing.Point(14, 533);
+            this.lisImport.Name = "lisImport";
+            this.lisImport.Size = new System.Drawing.Size(820, 169);
+            this.lisImport.TabIndex = 126;
+            this.lisImport.UseCompatibleStateImageBehavior = false;
+            this.lisImport.Click += new System.EventHandler(this.lisImport_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
+            this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSave.Location = new System.Drawing.Point(684, 365);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(150, 66);
+            this.btnSave.TabIndex = 127;
+            this.btnSave.Text = "Save";
+            this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSave.UseVisualStyleBackColor = true;
+            // 
             // frmImports
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(849, 800);
             this.ControlBox = false;
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.lisImport);
             this.Controls.Add(this.txtImportCode);
             this.Controls.Add(this.ImportCode);
             this.Controls.Add(this.txtTotal);
@@ -399,10 +411,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSearchImports);
             this.Controls.Add(this.txtSearch);
-            this.Controls.Add(this.dgvImports);
             this.Controls.Add(this.btnView);
             this.Controls.Add(this.btnUpdate);
-            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.label2);
@@ -412,7 +423,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmImports";
             this.Load += new System.EventHandler(this.frmImports_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvImports)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -422,10 +432,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnSearchImports;
         private System.Windows.Forms.TextBox txtSearch;
-        private System.Windows.Forms.DataGridView dgvImports;
         private System.Windows.Forms.Button btnView;
         private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Label label1;
@@ -450,5 +459,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtImportCode;
         private System.Windows.Forms.Label ImportCode;
+        private System.Windows.Forms.ListView lisImport;
+        private System.Windows.Forms.Button btnSave;
     }
 }

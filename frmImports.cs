@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace Systems
 {
@@ -19,40 +20,12 @@ namespace Systems
         SqlDependency dep;
         DataTable dt;
         SqlCommand com;
+        decimal Total = 0;
 
         public frmImports()
         {
             InitializeComponent();
             db.SystemConnection();
-            LoadData();
-        }
-
-        public void LoadData()
-        {
-            dgvImports.DataSource = null;
-            com = new SqlCommand("spGetAllImports", db.con);
-            com.CommandType = CommandType.StoredProcedure;
-
-            dep = new SqlDependency(com);
-            dep.OnChange += new OnChangeEventHandler(OnChange);
-
-            dap = new SqlDataAdapter(com);
-            dt = new DataTable();
-            dap.Fill(dt);
-
-            dgvImports.DataSource = dt;
-        }
-
-        public void OnChange(object sender, SqlNotificationEventArgs e)
-        {
-            if (this.InvokeRequired)
-            {
-                dgvImports.BeginInvoke(new MethodInvoker(LoadData));
-            }
-            else
-            {
-                LoadData();
-            }
         }
 
         private void frmImports_Load(object sender, EventArgs e)
@@ -84,40 +57,18 @@ namespace Systems
 
             cboSupplierName.Text = null;
 
+            lisImport.Clear();
+            lisImport.View = View.Details;
+            lisImport.FullRowSelect = true; // Enable clicking entire row to select
+            lisImport.MultiSelect = false; // Allow only one item to be selected
+            lisImport.Columns.Add("Product ID", 200);
+            lisImport.Columns.Add("Product Name", 200);
+            lisImport.Columns.Add("Quantity", 100);
+            lisImport.Columns.Add("Price", 100);
+            lisImport.Columns.Add("Amount", 200);
+            Total = 0;
+
         }
-
-        private void CalculateTotal()
-        {
-            try
-            {
-                // Check if both fields have valid input
-                if (string.IsNullOrWhiteSpace(txtQty.Text) || string.IsNullOrWhiteSpace(txtUnitPrice.Text))
-                {
-                    txtTotal.Text = "$  " + "0.00";
-                    return;
-                }
-
-                // Clean the unit price (remove "$" and spaces)
-                string cleanedUnitPrice = txtUnitPrice.Text.Replace("$", "").Trim();
-
-                // Parse inputs
-                if (decimal.TryParse(txtQty.Text, out decimal qty) &&
-                    decimal.TryParse(cleanedUnitPrice, out decimal unitPrice))
-                {
-                    decimal total = qty * unitPrice;
-                    txtTotal.Text = "$  " + total.ToString("F2"); // Format to 2 decimal places
-                }
-                else
-                {
-                    txtTotal.Text = "$  " + "0.00";
-                }
-            }
-            catch (Exception)
-            {
-                txtTotal.Text = "0 Railway";
-            }
-        }
-
         private void btnExit_Click(object sender, EventArgs e)
         {
             Close();
@@ -135,7 +86,9 @@ namespace Systems
 
         private void txtProductCode_TextChanged(object sender, EventArgs e)
         {
-            com = new SqlCommand("SELECT ProName, UPIS FROM tb_Products WHERE ProCode ='" +txtProductCode.Text+"'",db.con);
+            com = new SqlCommand("spGetNameProduct", db.con);
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@ProCode", txtProductCode.Text);
             SqlDataReader dr = com.ExecuteReader();
             if (dr.HasRows)
             {
@@ -154,81 +107,47 @@ namespace Systems
             com.Dispose();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtTotal_TextChanged(object sender, EventArgs e)
-        { 
-            CalculateTotal();
-        }
-
-        private void txtQty_TextChanged(object sender, EventArgs e)
-        {
-            CalculateTotal();
-        }
-
-        private void txtUnitPrice_TextChanged(object sender, EventArgs e)
-        {
-            CalculateTotal();
-        }
-
-        private void dgvImports_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int i;
-            if (dgvImports.Rows.Count > 0)
-            {
-                i = e.RowIndex;
-                if (i < 0) return;
-
-                DataGridViewRow row = dgvImports.Rows[i];
-                txtImportCode.Text = row.Cells["ImpCode"].Value.ToString();
-                dateImportDate.Text = row.Cells["ImpDate"].Value.ToString();
-                cboStaffID.Text = row.Cells["staffID"].Value.ToString();
-                txtStaffName.Text = row.Cells["FullName"].Value.ToString();
-                txtSupplierID.Text = row.Cells["supID"].Value.ToString();
-                cboSupplierName.Text = row.Cells["Supplier"].Value.ToString();
-                txtProductCode.Text = row.Cells["ProCode"].Value.ToString();
-                txtProductName.Text = row.Cells["ProName"].Value.ToString();
-                txtQty.Text = row.Cells["Qty"].Value.ToString();
-                txtUnitPrice.Text = row.Cells["UPIS"].Value.ToString();
-                txtTotal.Text = row.Cells["Total"].Value.ToString();
-            }
-        }
 
         private void btnSearchImports_Click(object sender, EventArgs e)
         {
+            // Fix: ListView does not have a DataSource property. Replace with appropriate logic to filter items manually.  
+            var searchText = txtSearch.Text.ToLower();
+            var filteredItems = new List<ListViewItem>();
 
-            (dgvImports.DataSource as DataTable).DefaultView.RowFilter = string.Format("FullName LIKE '%{0}%' OR CONVERT(ImpCode, 'System.String') LIKE '{0}'", txtSearch.Text);
-
-            int i;
-            if (dgvImports.RowCount > 0 && dgvImports.CurrentRow != null)
+            foreach (ListViewItem item in lisImport.Items)
             {
-                i = dgvImports.CurrentRow.Index;
+                if (item.SubItems[1].Text.ToLower().Contains(searchText) || item.SubItems[0].Text.ToLower().Contains(searchText))
+                {
+                    filteredItems.Add(item);
+                }
+            }
 
-                DataGridViewRow row = new DataGridViewRow();
-                row = dgvImports.Rows[i];
-                txtImportCode.Text = row.Cells["ImpCode"].Value.ToString();
-                dateImportDate.Text = row.Cells["ImpDate"].Value.ToString();
-                cboStaffID.Text = row.Cells["staffID"].Value.ToString();
-                txtStaffName.Text = row.Cells["FullName"].Value.ToString();
-                txtSupplierID.Text = row.Cells["supID"].Value.ToString();
-                cboSupplierName.Text = row.Cells["Supplier"].Value.ToString();
-                txtProductCode.Text = row.Cells["ProCode"].Value.ToString();
-                txtProductName.Text = row.Cells["ProName"].Value.ToString();
-                txtQty.Text = row.Cells["Qty"].Value.ToString();
-                txtUnitPrice.Text = row.Cells["UPIS"].Value.ToString();
-                txtTotal.Text = row.Cells["Total"].Value.ToString();
+            lisImport.Items.Clear();
+            lisImport.Items.AddRange(filteredItems.ToArray());
+
+            if (lisImport.Items.Count > 0)
+            {
+                var item = lisImport.Items[0];
+                txtImportCode.Text = item.SubItems[0].Text;
+                dateImportDate.Text = item.SubItems[1].Text;
+                cboStaffID.Text = item.SubItems[2].Text;
+                txtStaffName.Text = item.SubItems[3].Text;
+                txtSupplierID.Text = item.SubItems[4].Text;
+                cboSupplierName.Text = item.SubItems[5].Text;
+                txtProductCode.Text = item.SubItems[6].Text;
+                txtProductName.Text = item.SubItems[7].Text;
+                txtQty.Text = item.SubItems[8].Text;
+                txtUnitPrice.Text = item.SubItems[9].Text;
+                txtTotal.Text = item.SubItems[10].Text;
             }
             else
             {
                 txtImportCode.Clear();
                 dateImportDate.Text = null;
-                cboStaffID.Text= null;
+                cboStaffID.Text = null;
                 txtStaffName.Clear();
                 txtSupplierID.Clear();
-                cboSupplierName.Text= null;
+                cboSupplierName.Text = null;
                 txtProductCode.Clear();
                 txtProductName.Clear();
                 txtQty.Clear();
@@ -237,6 +156,79 @@ namespace Systems
             }
 
             txtSearch.Clear();
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtProductCode.Text) || string.IsNullOrWhiteSpace(txtProductName.Text) ||
+                string.IsNullOrWhiteSpace(txtQty.Text) || string.IsNullOrWhiteSpace(txtUnitPrice.Text) ||
+                !int.TryParse(txtQty.Text, out int qty) || qty <= 0 ||
+                !decimal.TryParse(txtUnitPrice.Text, NumberStyles.Currency, CultureInfo.CurrentCulture, out decimal unitPrice) || unitPrice <= 0)
+            {
+                MessageBox.Show("Invalid input.");
+                return;
+            }
+
+            var lv = lisImport.FindItemWithText(txtProductCode.Text);
+
+            if (lv != null && int.TryParse(lv.SubItems[2].Text, out int currentQty) &&
+                decimal.TryParse(lv.SubItems[4].Text, NumberStyles.Currency, CultureInfo.CurrentCulture, out decimal oldAmount))
+            {
+                int newQty = currentQty + qty;
+                var amount = newQty * unitPrice; // Use total quantity
+                lv.SubItems[2].Text = newQty.ToString();
+                lv.SubItems[4].Text = amount.ToString("C");
+                Total = Total - oldAmount + amount;
+            }
+            else
+            {
+                var amount = qty * unitPrice;
+                lisImport.Items.Add(new ListViewItem(new[]
+                {
+            txtProductCode.Text, txtProductName.Text, qty.ToString(),
+            unitPrice.ToString("C"), amount.ToString("C")
+        }));
+                Total += amount;
+            }
+
+            txtTotal.Text = Total.ToString("C");
+            txtProductCode.Text = txtProductName.Text = txtQty.Text = txtUnitPrice.Text = "";
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            if (lisImport.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select an item to remove.");
+                return;
+            }
+
+            var item = lisImport.SelectedItems[0];
+            if (MessageBox.Show("Do you want to remove this item?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                if (decimal.TryParse(item.SubItems[4].Text, NumberStyles.Currency, CultureInfo.CurrentCulture, out decimal amount))
+                {
+                    Total -= amount;
+                    lisImport.Items.Remove(item);
+                    txtTotal.Text = Total.ToString("C");
+                }
+                else
+                {
+                    MessageBox.Show("Invalid amount format.");
+                }
+            }
+        }
+
+        private void lisImport_Click(object sender, EventArgs e)
+        {
+            if (lisImport.SelectedItems.Count > 0)
+            {
+                var item = lisImport.SelectedItems[0];
+                txtProductCode.Text = item.SubItems[0].Text;
+                txtProductName.Text = item.SubItems[1].Text;
+                txtQty.Text = item.SubItems[2].Text;
+                txtUnitPrice.Text = item.SubItems[3].Text;
+            }
         }
     }
 }
