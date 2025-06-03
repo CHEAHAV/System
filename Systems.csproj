@@ -53,12 +53,6 @@
     <Compile Include="frmCustomers.Designer.cs">
       <DependentUpon>frmCustomers.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmImports.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmImports.Designer.cs">
-      <DependentUpon>frmImports.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmImportsDetail.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,9 +99,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmCustomers.resx">
       <DependentUpon>frmCustomers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmImports.resx">
-      <DependentUpon>frmImports.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmImportsDetail.resx">
       <DependentUpon>frmImportsDetail.cs</DependentUpon>

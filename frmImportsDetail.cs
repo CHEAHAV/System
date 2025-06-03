@@ -12,7 +12,7 @@ using System.Globalization;
 
 namespace Systems
 {
-    public partial class frmImports : Form
+    public partial class frmImportsDetail : Form
     {
 
         Database db = new Database();
@@ -22,7 +22,7 @@ namespace Systems
         SqlCommand com;
         decimal Total = 0;
 
-        public frmImports()
+        public frmImportsDetail()
         {
             InitializeComponent();
             db.SystemConnection();
@@ -229,6 +229,23 @@ namespace Systems
                 txtQty.Text = item.SubItems[2].Text;
                 txtUnitPrice.Text = item.SubItems[3].Text;
             }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            var total = Decimal.Parse(txtTotal.Text, NumberStyles.Currency);
+            com = new SqlCommand("spsetImports",db.con);
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@impDate",dateImportDate.Value);
+            com.Parameters.AddWithValue("@staffID", cboStaffID.Text);
+            com.Parameters.AddWithValue("@fullName", txtStaffName.Text);
+            com.Parameters.AddWithValue("@supID", txtSupplierID.Text);
+            com.Parameters.AddWithValue("@supplier", cboSupplierName.Text);
+            com.Parameters.AddWithValue("@total", total);
+
+            MessageBox.Show("Save");
+
+            com.ExecuteNonQuery();
         }
     }
 }
