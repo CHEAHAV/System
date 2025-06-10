@@ -233,19 +233,57 @@ namespace Systems
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            var total = Decimal.Parse(txtTotal.Text, NumberStyles.Currency);
-            com = new SqlCommand("spsetImports",db.con);
-            com.CommandType = CommandType.StoredProcedure;
-            com.Parameters.AddWithValue("@impDate",dateImportDate.Value);
-            com.Parameters.AddWithValue("@staffID", cboStaffID.Text);
-            com.Parameters.AddWithValue("@fullName", txtStaffName.Text);
-            com.Parameters.AddWithValue("@supID", txtSupplierID.Text);
-            com.Parameters.AddWithValue("@supplier", cboSupplierName.Text);
-            com.Parameters.AddWithValue("@total", total);
 
-            MessageBox.Show("Save");
+            DataTable dtMaster = new DataTable();
+            dtMaster.Columns.Add("ImpDate", typeof(string));
+            dtMaster.Columns.Add("StaffID", typeof(int));
+            dtMaster.Columns.Add("FullName", typeof(string));
+            dtMaster.Columns.Add("SupID", typeof(int));
+            dtMaster.Columns.Add("Supplier", typeof(string));
+            dtMaster.Columns.Add("Total", typeof(float));
+
+            string ImpDate = dateImportDate.Value.ToString("yyyy-MM-dd HH:mm:ss");
+            dtMaster.Rows.Add(DateTime.Parse(ImpDate),cboStaffID.Text, txtStaffName.Text,txtSupplierID.Text, cboSupplierName.Text, Total);
+
+            DataTable dtDetail = new DataTable();
+            dtDetail.Columns.Add("ProCode", typeof(string));
+            dtDetail.Columns.Add("ProName", typeof(string));
+            dtDetail.Columns.Add("Qty", typeof(int));
+            dtDetail.Columns.Add("Price", typeof(float));
+            dtDetail.Columns.Add("Amount", typeof(float));
+
+            foreach (ListViewItem item in lisImport.Items)
+            {
+                string pCode = item.Text;
+                string pName = item.SubItems[1].Text;
+                int qty = int.Parse(item.SubItems[2].Text);
+                float price = float.Parse(item.SubItems[3].Text, NumberStyles.Currency);
+                float amount = float.Parse(item.SubItems[4].Text, NumberStyles.Currency);
+
+                dtDetail.Rows.Add(pCode, pName, qty, price, amount);
+            }
+
+            com = new SqlCommand("spsetImports", db.con);
+            com.CommandType = CommandType.StoredProcedure;
+
+            SqlParameter pImport = new SqlParameter();
+            pImport.ParameterName = "@IMaster";
+            pImport.SqlDbType = SqlDbType.Structured;
+            pImport.Value = dtMaster;
+            com.Parameters.Add(pImport);
+
+            SqlParameter pDetail = new SqlParameter();
+            pDetail.ParameterName = "@IDetail";
+            pDetail.SqlDbType = SqlDbType.Structured;
+            pDetail.Value = dtDetail;
+            com.Parameters.Add(pDetail);
 
             com.ExecuteNonQuery();
+
+
+
+            MessageBox.Show("Save Success...!");
+
         }
     }
 }
