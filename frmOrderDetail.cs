@@ -61,7 +61,9 @@ namespace Systems
 
         private void btnExitOrderDetail_Click(object sender, EventArgs e)
         {
-            this.Close();
+            frmPOS pos = new frmPOS();
+            pos.Show();
+            this.Hide();
         }
     }
 }

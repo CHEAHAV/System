@@ -12,7 +12,7 @@ using System.Globalization;
 
 namespace Systems
 {
-    public partial class frmImportsDetail : Form
+    public partial class frmImports : Form
     {
 
         Database db = new Database();
@@ -22,7 +22,7 @@ namespace Systems
         SqlCommand com;
         decimal Total = 0;
 
-        public frmImportsDetail()
+        public frmImports()
         {
             InitializeComponent();
             db.SystemConnection();
@@ -71,7 +71,9 @@ namespace Systems
         }
         private void btnExit_Click(object sender, EventArgs e)
         {
-            Close();
+            frmPOS pos = new frmPOS();
+            pos.Show();
+            this.Hide();
         }
 
         private void cboStaffID_SelectionChangeCommitted(object sender, EventArgs e)
@@ -95,13 +97,11 @@ namespace Systems
                 while (dr.Read())
                 {
                     txtProductName.Text = dr["ProName"].ToString();
-                    txtUnitPrice.Text = "$  " + dr["UPIS"].ToString();
                 }
             }
             else
             {
                 txtProductName.Text = null;
-                txtUnitPrice.Text = null;
             }
             dr.Dispose();
             com.Dispose();
@@ -160,39 +160,51 @@ namespace Systems
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtProductCode.Text) || string.IsNullOrWhiteSpace(txtProductName.Text) ||
-                string.IsNullOrWhiteSpace(txtQty.Text) || string.IsNullOrWhiteSpace(txtUnitPrice.Text) ||
-                !int.TryParse(txtQty.Text, out int qty) || qty <= 0 ||
-                !decimal.TryParse(txtUnitPrice.Text, NumberStyles.Currency, CultureInfo.CurrentCulture, out decimal unitPrice) || unitPrice <= 0)
+            Decimal amount, s;
+
+            ListViewItem lvi = null;
+            foreach (ListViewItem item in lisImport.Items)
             {
-                MessageBox.Show("Invalid input.");
-                return;
+                if (item.Text.Equals(txtProductCode.Text, StringComparison.Ordinal))
+                { 
+                    lvi = item;
+                    break;
+                }
             }
 
-            var lv = lisImport.FindItemWithText(txtProductCode.Text);
-
-            if (lv != null && int.TryParse(lv.SubItems[2].Text, out int currentQty) &&
-                decimal.TryParse(lv.SubItems[4].Text, NumberStyles.Currency, CultureInfo.CurrentCulture, out decimal oldAmount))
+            if (lvi != null)
             {
-                int newQty = currentQty + qty;
-                var amount = newQty * unitPrice; // Use total quantity
-                lv.SubItems[2].Text = newQty.ToString();
-                lv.SubItems[4].Text = amount.ToString("C");
-                Total = Total - oldAmount + amount;
+                var qty = int.Parse(lvi.SubItems[2].Text) + int.Parse(txtQty.Text);
+                lvi.SubItems[2].Text = qty.ToString();
+                Total = Total - decimal.Parse(lvi.SubItems[4].Text, NumberStyles.Currency);
+                var price = decimal.Parse(txtUnitPrice.Text, NumberStyles.Currency);
+                amount = qty * price;
+                lvi.SubItems[4].Text = string.Format("{0:c}", amount);
+                Total = amount + Total;
             }
             else
             {
-                var amount = qty * unitPrice;
-                lisImport.Items.Add(new ListViewItem(new[]
-                {
-            txtProductCode.Text, txtProductName.Text, qty.ToString(),
-            unitPrice.ToString("C"), amount.ToString("C")
-        }));
-                Total += amount;
+                ListViewItem item;
+                string[] arr = new string[5];
+                arr[0] = txtProductCode.Text;
+                arr[1] = txtProductName.Text;
+                arr[2] = txtQty.Text;
+                s = decimal.Parse(txtUnitPrice.Text);
+                arr[3] = string.Format("{0:c}", s);
+                amount = decimal.Parse(txtQty.Text) * decimal.Parse(txtUnitPrice.Text);
+                arr[4] = string.Format("{0:c}", amount);
+
+                item = new ListViewItem(arr);
+                lisImport.Items.Add(item);
+                Total = Total + amount;
             }
 
-            txtTotal.Text = Total.ToString("C");
-            txtProductCode.Text = txtProductName.Text = txtQty.Text = txtUnitPrice.Text = "";
+            txtTotal.Text = string.Format("{0:c}", Total);
+            txtProductCode.Text = null;
+            txtProductName.Text = null;
+            txtQty.Text = null;
+            txtUnitPrice.Text = null;
+
         }
 
         private void btnRemove_Click(object sender, EventArgs e)

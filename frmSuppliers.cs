@@ -62,7 +62,9 @@ namespace Systems
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            Close();
+            frmPOS pos = new frmPOS();
+            pos.Show();
+            this.Hide();
         }
 
         private void button4_Click(object sender, EventArgs e)

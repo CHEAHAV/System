@@ -16,7 +16,7 @@ namespace Systems
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmImportsDetail());
+            Application.Run(new frmImports());
         }
     }
 }

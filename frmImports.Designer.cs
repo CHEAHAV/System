@@ -1,6 +1,6 @@
 ﻿namespace Systems
 {
-    partial class frmImportsDetail
+    partial class frmImports
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmImportsDetail));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmImports));
             this.label2 = new System.Windows.Forms.Label();
             this.btnSearchImports = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
@@ -69,9 +69,9 @@
             this.label2.Font = new System.Drawing.Font("CollegiateFLF", 27.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(330, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(285, 37);
+            this.label2.Size = new System.Drawing.Size(176, 37);
             this.label2.TabIndex = 79;
-            this.label2.Text = "ImportDetail";
+            this.label2.Text = "Imports";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnSearchImports
@@ -380,7 +380,7 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // frmImportsDetail
+            // frmImports
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -420,9 +420,9 @@
             this.Controls.Add(this.label2);
             this.Font = new System.Drawing.Font("Khmer OS Battambang", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.Name = "frmImportsDetail";
+            this.Name = "frmImports";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmImportDetail";
+            this.Text = "frmImports";
             this.Load += new System.EventHandler(this.frmImports_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

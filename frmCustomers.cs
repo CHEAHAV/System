@@ -62,7 +62,9 @@ namespace Systems
 
         private void btnExitCustomer_Click(object sender, EventArgs e)
         {
-            Close();
+            frmPOS pos = new frmPOS();
+            pos.Show();
+            this.Hide();
         }
 
         private void btnAddCustomer_Click(object sender, EventArgs e)
