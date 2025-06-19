@@ -58,9 +58,9 @@ namespace Systems
 
         private void btnExitPayment_Click(object sender, EventArgs e)
         {
+            this.Hide();
             frmPOS pos = new frmPOS();
             pos.Show();
-            this.Hide();
         }
 
         private void dgvPayment_CellClick(object sender, DataGridViewCellEventArgs e)

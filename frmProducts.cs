@@ -63,9 +63,9 @@ namespace Systems
 
         private void btnExit_Click(object sender, EventArgs e)
         {
+            this.Hide();
             frmPOS pos = new frmPOS();
             pos.Show();
-            this.Hide();
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
