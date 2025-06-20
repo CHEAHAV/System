@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPOS));
             this.label1 = new System.Windows.Forms.Label();
             this.btnPayments = new System.Windows.Forms.Button();
             this.btnProducts = new System.Windows.Forms.Button();
@@ -35,6 +36,7 @@
             this.btnStaffs = new System.Windows.Forms.Button();
             this.btnCustomers = new System.Windows.Forms.Button();
             this.btnImports = new System.Windows.Forms.Button();
+            this.btnExit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -108,11 +110,27 @@
             this.btnImports.UseVisualStyleBackColor = true;
             this.btnImports.Click += new System.EventHandler(this.btnImports_Click);
             // 
+            // btnExit
+            // 
+            this.btnExit.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExit.Image = ((System.Drawing.Image)(resources.GetObject("btnExit.Image")));
+            this.btnExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnExit.Location = new System.Drawing.Point(1054, 91);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(150, 66);
+            this.btnExit.TabIndex = 80;
+            this.btnExit.Text = "Exit";
+            this.btnExit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
             // frmPOS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1207, 701);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnImports);
             this.Controls.Add(this.btnCustomers);
             this.Controls.Add(this.btnStaffs);
@@ -139,5 +157,6 @@
         private System.Windows.Forms.Button btnStaffs;
         private System.Windows.Forms.Button btnCustomers;
         private System.Windows.Forms.Button btnImports;
+        private System.Windows.Forms.Button btnExit;
     }
 }

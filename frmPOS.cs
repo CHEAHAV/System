@@ -63,5 +63,10 @@ namespace Systems
             frmOrders Order = new frmOrders();
             Order.Show();
         }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
