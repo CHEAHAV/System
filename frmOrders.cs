@@ -21,42 +21,20 @@ namespace Systems
         SqlDependency dep;
         SqlDataAdapter dap;
         DataTable dt;
+        decimal Total = 0;
 
         public frmOrders()
         {
             InitializeComponent();
             db.SystemConnection();
-            LoadData();
         }
 
-        public void LoadData()
+
+        private void btnExitOrder_Click(object sender, EventArgs e)
         {
-            dgvOrders.DataSource = null;
-            com = new SqlCommand("spGetAllOrders", db.con);
-            com.CommandType = CommandType.StoredProcedure;
-
-            dep = new SqlDependency(com);
-            dep.OnChange += new OnChangeEventHandler(OnChange);
-
-            dap = new SqlDataAdapter(com);
-            dt = new DataTable();
-            dap.Fill(dt);
-
-            dgvOrders.DataSource = dt;
-
-
-        }
-
-        public void OnChange(object sender, SqlNotificationEventArgs e)
-        {
-            if (this.InvokeRequired)
-            {
-                dgvOrders.BeginInvoke( new MethodInvoker(LoadData));
-            }
-            else
-            {
-                LoadData();            
-            }
+            this.Hide();
+            frmPOS pos = new frmPOS();
+            pos.Show();
         }
 
         private void frmOrders_Load(object sender, EventArgs e)
@@ -71,6 +49,7 @@ namespace Systems
             cboStaffID.DataSource = dt;
             cboStaffID.DisplayMember = "staffID";
             cboStaffID.ValueMember = "fullName";
+
             cboStaffID.Text = null;
 
             dap = new SqlDataAdapter("SELECT * FROM fnGetAllCustomers()", db.con);
@@ -83,77 +62,38 @@ namespace Systems
             cboCusID.DataSource = dt;
             cboCusID.DisplayMember = "cusID";
             cboCusID.ValueMember = "CusName";
+
             cboCusID.Text = null;
-        }
 
-        private void btnExitOrder_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            frmPOS pos = new frmPOS();
-            pos.Show();
-        }
+            dap = new SqlDataAdapter("SELECT * FROM fnGetAllProducts()", db.con);
+            dt = new DataTable();
+            dap.Fill(dt);
 
-        private void btnSearchOrders_Click(object sender, EventArgs e)
-        {
-            (dgvOrders.DataSource as DataTable).DefaultView.RowFilter = string.Format("FullName LIKE '%{0}%' OR Convert(OrdCode, System.String) LIKE '{0}'", txtSearch.Text);
+            cboProductName.DataSource = null;
+            cboProductName.Items.Clear();
 
-            int i;
-            if (dgvOrders.Rows.Count > 0 && dgvOrders.CurrentRow != null)
-            {
-                i = dgvOrders.CurrentRow.Index;
-                DataGridViewRow row = dgvOrders.Rows[i];
-                txtOrdersCode.Text = row.Cells["OrdCode"].Value.ToString();
-                dateOrders.Text = row.Cells["OrdDate"].Value.ToString();
-                cboStaffID.Text = row.Cells["StaffID"].Value.ToString();
-                txtOrdersStaffName.Text = row.Cells["FullName"].Value.ToString();
-                cboCusID.Text = row.Cells["CusID"].Value.ToString();
-                txtOrdersCustomerName.Text = row.Cells["CusName"].Value.ToString();
-                txtOrderTotal.Text = row.Cells["Total"].Value.ToString();
-            }
-            else
-            { 
-                txtOrdersCode.Clear();
-                dateOrders.Text = string.Empty;
-                cboStaffID.Text = string.Empty;
-                txtOrdersStaffName.Clear();
-                cboCusID.Text = string.Empty;
-                txtOrdersCustomerName.Clear();
-                txtOrderTotal.Clear();
-            }
+            cboProductName.DataSource = dt;
+            cboProductName.DisplayMember = "ProName";
+            cboProductName.ValueMember = "ProCode";
 
-            txtSearch.Clear();
-        }
+            cboProductName.Text = null;
 
-        private void btnAddOrders_Click(object sender, EventArgs e)
-        {
-            com = new SqlCommand("spSetOrders", db.con);
-            com.CommandType = CommandType.StoredProcedure;
-
-            var total = Decimal.Parse(txtOrderTotal.Text,NumberStyles.Currency);
-
-            com.Parameters.AddWithValue("@OrdDate", dateOrders.Value);
-            com.Parameters.AddWithValue("@staffID", cboStaffID.Text);
-            com.Parameters.AddWithValue("@FullName", txtOrdersStaffName.Text);
-            com.Parameters.AddWithValue("@cusID", cboCusID.Text);
-            com.Parameters.AddWithValue("@cusName", txtOrdersCustomerName.Text);
-            com.Parameters.AddWithValue("@Total", txtOrderTotal.Text);
-
-            com.ExecuteNonQuery();
-
-            MessageBox.Show("Orders Add Success!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            dateOrders = null;
-            cboStaffID.Text = string.Empty;
-            txtOrdersStaffName.Clear();
-            cboCusID.Text = string.Empty;
-            txtOrdersCustomerName.Clear();
-            txtOrderTotal.Clear();
+            lisOrders.Clear();
+            lisOrders.View = View.Details;
+            lisOrders.FullRowSelect = true; // Enable clicking entire row to select
+            lisOrders.MultiSelect = false; // Allow only one item to be selected
+            lisOrders.Columns.Add("Product's Code", 200);
+            lisOrders.Columns.Add("Product's Name", 200);
+            lisOrders.Columns.Add("Quantity", 110);
+            lisOrders.Columns.Add("Price", 100);
+            lisOrders.Columns.Add("Amount", 200);
+            Total = 0;
 
         }
 
         private void cboStaffID_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            txtOrdersStaffName.Text = cboStaffID.SelectedValue.ToString();
+            txtStaffName.Text = cboStaffID.SelectedValue.ToString();
         }
 
         private void cboCusID_SelectionChangeCommitted(object sender, EventArgs e)
@@ -161,28 +101,159 @@ namespace Systems
             txtOrdersCustomerName.Text = cboCusID.SelectedValue.ToString();
         }
 
-        private void dgvOrders_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void cboProductName_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            int i;
-            if (dgvOrders.RowCount > 0)
-            { 
-                i = e.RowIndex;
-                if (i < 0) return;
+            txtProductCode.Text = cboProductName.SelectedValue.ToString();
 
-                DataGridViewRow row = dgvOrders.Rows[i];
-                txtOrdersCode.Text = row.Cells["OrdCode"].Value.ToString();
-                dateOrders.Text = row.Cells["OrdDate"].Value.ToString();
-                cboStaffID.Text = row.Cells["StaffID"].Value.ToString();
-                txtOrdersStaffName.Text = row.Cells["FullName"].Value.ToString();
-                cboCusID.Text = row.Cells["CusID"].Value.ToString();
-                txtOrdersCustomerName.Text = row.Cells["CusName"].Value.ToString();
-                txtOrderTotal.Text = row.Cells["Total"].Value.ToString();
+        }
+
+        private void txtProductCode_TextChanged(object sender, EventArgs e)
+        {
+            com = new SqlCommand("spGetNameProduct", db.con);
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@ProCode", txtProductCode.Text);
+            var dr = com.ExecuteReader();
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    txtUnitPrice.Text = string.Format("{0:c}", Decimal.Parse(dr["SUP"].ToString()));
+
+                }
+            }
+            else
+            {
+                txtUnitPrice.Text = null;
+            }
+            dr.Dispose();
+            com.Dispose();
+        }
+
+        private void btnAddOrders_Click(object sender, EventArgs e)
+        {
+            Decimal amount, s;
+
+            ListViewItem lvi = null;
+            foreach (ListViewItem item in lisOrders.Items)
+            {
+                if (item.Text.Equals(txtProductCode.Text, StringComparison.Ordinal))
+                {
+                    lvi = item;
+                    break;
+                }
+            }
+
+            if (lvi != null)
+            {
+                var qty = int.Parse(lvi.SubItems[2].Text) + int.Parse(txtQty.Text);
+                lvi.SubItems[2].Text = qty.ToString();
+                Total = Total - decimal.Parse(lvi.SubItems[4].Text, NumberStyles.Currency);
+                var price = decimal.Parse(txtUnitPrice.Text, NumberStyles.Currency);
+                amount = qty * price;
+                lvi.SubItems[4].Text = string.Format("{0:c}", amount);
+                Total = amount + Total;
+            }
+            else
+            {
+                ListViewItem item;
+                string[] arr = new string[5];
+                arr[0] = txtProductCode.Text;
+                arr[1] = cboProductName.Text;
+                arr[2] = txtQty.Text;
+                s = decimal.Parse(txtUnitPrice.Text, NumberStyles.Currency, CultureInfo.CurrentCulture.NumberFormat);
+                arr[3] = string.Format("{0:c}", s);
+                amount = decimal.Parse(txtQty.Text) * decimal.Parse(txtUnitPrice.Text, NumberStyles.Currency, CultureInfo.CurrentCulture.NumberFormat);
+                arr[4] = string.Format("{0:c}", amount);
+
+                item = new ListViewItem(arr);
+                lisOrders.Items.Add(item);
+                Total = Total + amount;
+            }
+
+            txtOrderTotal.Text = string.Format("{0:c}", Total);
+            
+            txtProductCode.Text = null;
+            cboProductName.Text = null;
+            txtQty.Text = null;
+            txtUnitPrice.Text = null;
+
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            if (lisOrders.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select an item to remove.");
+                return;
+            }
+
+            var item = lisOrders.SelectedItems[0];
+            if (MessageBox.Show("Do you want to remove this item?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                if (decimal.TryParse(item.SubItems[4].Text, NumberStyles.Currency, CultureInfo.CurrentCulture, out decimal amount))
+                {
+                    Total -= amount;
+                    lisOrders.Items.Remove(item);
+                    txtOrderTotal.Text = Total.ToString("C");
+                }
+                else
+                {
+                    MessageBox.Show("Invalid amount format.");
+                }
             }
         }
 
-        private void btnUpdateOrders_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
+            DataTable dtMaster = new DataTable();
+            dtMaster.Columns.Add("ImpDate", typeof(string));
+            dtMaster.Columns.Add("StaffID", typeof(int));
+            dtMaster.Columns.Add("FullName", typeof(string));
+            dtMaster.Columns.Add("cusID", typeof(int));
+            dtMaster.Columns.Add("cusName", typeof(string));
+            dtMaster.Columns.Add("Total", typeof(float));
 
+            string ImpDate = dateOrders.Value.ToString("yyyy-MM-dd HH:mm:ss");
+            dtMaster.Rows.Add(DateTime.Parse(ImpDate), cboStaffID.Text, txtStaffName.Text, cboCusID.Text, txtOrdersCustomerName.Text, Total);
+
+            DataTable dtDetail = new DataTable();
+            dtDetail.Columns.Add("ProCode", typeof(string));
+            dtDetail.Columns.Add("ProName", typeof(string));
+            dtDetail.Columns.Add("Qty", typeof(int));
+            dtDetail.Columns.Add("Price", typeof(float));
+            dtDetail.Columns.Add("Amount", typeof(float));
+
+            foreach (ListViewItem item in lisOrders.Items)
+            {
+                string pCode = item.Text;
+                string pName = item.SubItems[1].Text;
+                int qty = int.Parse(item.SubItems[2].Text);
+                float price = float.Parse(item.SubItems[3].Text, NumberStyles.Currency);
+                float amount = float.Parse(item.SubItems[4].Text, NumberStyles.Currency);
+
+                dtDetail.Rows.Add(pCode, pName, qty, price, amount);
+            }
+
+            com = new SqlCommand("spsetOrders", db.con);
+            com.CommandType = CommandType.StoredProcedure;
+
+            SqlParameter pMaster = new SqlParameter();
+            pMaster.ParameterName = "@OMaster";
+            pMaster.SqlDbType = SqlDbType.Structured;
+            pMaster.Value = dtMaster;
+            com.Parameters.Add(pMaster);
+
+            SqlParameter pDetail = new SqlParameter();
+            pDetail.ParameterName = "@ODetail";
+            pDetail.SqlDbType = SqlDbType.Structured;
+            pDetail.Value = dtDetail;
+            com.Parameters.Add(pDetail);
+
+            com.ExecuteNonQuery();
+
+            MessageBox.Show("Save Success...!");
+            lisOrders.Items.Clear();
+            txtOrderTotal.Text = null;
         }
     }
 }

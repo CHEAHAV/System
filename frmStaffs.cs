@@ -76,11 +76,6 @@ namespace Systems
             }
         }
 
-        private void frmStaffs_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -136,11 +131,6 @@ namespace Systems
         private void btnSearchStaff_Click(object sender, EventArgs e)
         {
             (dgvStaff.DataSource as DataTable).DefaultView.RowFilter = string.Format("FullName LIKE '%{0}%' OR CONVERT(staffID, 'System.String') LIKE '%{0}%' OR (Gen LIKE '%{0}%')", txtSearch.Text);
-        }
-
-        private void txtSearch_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void dgvStaff_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -233,6 +223,11 @@ namespace Systems
             {
                 return;
             }
+        }
+
+        private void btnViewStaff_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

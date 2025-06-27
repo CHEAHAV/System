@@ -59,6 +59,12 @@
     <Compile Include="frmImports.Designer.cs">
       <DependentUpon>frmImports.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmOrderDetail.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +95,18 @@
     <Compile Include="frmProducts.Designer.cs">
       <DependentUpon>frmProducts.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmRegister.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRegister.Designer.cs">
+      <DependentUpon>frmRegister.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmStaffInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStaffInfo.Designer.cs">
+      <DependentUpon>frmStaffInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmStaffs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +127,9 @@
     <EmbeddedResource Include="frmImports.resx">
       <DependentUpon>frmImports.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmOrderDetail.resx">
       <DependentUpon>frmOrderDetail.cs</DependentUpon>
     </EmbeddedResource>
@@ -123,6 +144,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmProducts.resx">
       <DependentUpon>frmProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRegister.resx">
+      <DependentUpon>frmRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStaffInfo.resx">
+      <DependentUpon>frmStaffInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmStaffs.resx">
       <DependentUpon>frmStaffs.cs</DependentUpon>
@@ -206,6 +233,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Login1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ex.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imports.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\staffs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\customer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\order.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\products.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\supplier.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\payment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logout.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

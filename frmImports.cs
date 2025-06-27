@@ -86,76 +86,17 @@ namespace Systems
             txtSupplierID.Text = cboSupplierName.SelectedValue.ToString();
         }
 
-        private void txtProductCode_TextChanged(object sender, EventArgs e)
+        private void txtProductCode_Leave(object sender, EventArgs e)
         {
             com = new SqlCommand("spGetNameProduct", db.con);
             com.CommandType = CommandType.StoredProcedure;
             com.Parameters.AddWithValue("@ProCode", txtProductCode.Text);
-            SqlDataReader dr = com.ExecuteReader();
-            if (dr.HasRows)
-            {
-                while (dr.Read())
-                {
-                    txtProductName.Text = dr["ProName"].ToString();
-                }
-            }
-            else
-            {
-                txtProductName.Text = null;
-            }
+            var dr = com.ExecuteReader();
+
+            txtProductName.Text = dr.Read() ? dr.GetString(0) : null;
+
             dr.Dispose();
             com.Dispose();
-        }
-
-
-        private void btnSearchImports_Click(object sender, EventArgs e)
-        {
-            // Fix: ListView does not have a DataSource property. Replace with appropriate logic to filter items manually.  
-            var searchText = txtSearch.Text.ToLower();
-            var filteredItems = new List<ListViewItem>();
-
-            foreach (ListViewItem item in lisImport.Items)
-            {
-                if (item.SubItems[1].Text.ToLower().Contains(searchText) || item.SubItems[0].Text.ToLower().Contains(searchText))
-                {
-                    filteredItems.Add(item);
-                }
-            }
-
-            lisImport.Items.Clear();
-            lisImport.Items.AddRange(filteredItems.ToArray());
-
-            if (lisImport.Items.Count > 0)
-            {
-                var item = lisImport.Items[0];
-                txtImportCode.Text = item.SubItems[0].Text;
-                dateImportDate.Text = item.SubItems[1].Text;
-                cboStaffID.Text = item.SubItems[2].Text;
-                txtStaffName.Text = item.SubItems[3].Text;
-                txtSupplierID.Text = item.SubItems[4].Text;
-                cboSupplierName.Text = item.SubItems[5].Text;
-                txtProductCode.Text = item.SubItems[6].Text;
-                txtProductName.Text = item.SubItems[7].Text;
-                txtQty.Text = item.SubItems[8].Text;
-                txtUnitPrice.Text = item.SubItems[9].Text;
-                txtTotal.Text = item.SubItems[10].Text;
-            }
-            else
-            {
-                txtImportCode.Clear();
-                dateImportDate.Text = null;
-                cboStaffID.Text = null;
-                txtStaffName.Clear();
-                txtSupplierID.Clear();
-                cboSupplierName.Text = null;
-                txtProductCode.Clear();
-                txtProductName.Clear();
-                txtQty.Clear();
-                txtUnitPrice.Clear();
-                txtTotal.Clear();
-            }
-
-            txtSearch.Clear();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -189,9 +130,9 @@ namespace Systems
                 arr[0] = txtProductCode.Text;
                 arr[1] = txtProductName.Text;
                 arr[2] = txtQty.Text;
-                s = decimal.Parse(txtUnitPrice.Text);
+                s = decimal.Parse(txtUnitPrice.Text, NumberStyles.Currency, CultureInfo.CurrentCulture.NumberFormat);
                 arr[3] = string.Format("{0:c}", s);
-                amount = decimal.Parse(txtQty.Text) * decimal.Parse(txtUnitPrice.Text);
+                amount = decimal.Parse(txtQty.Text) * decimal.Parse(txtUnitPrice.Text, NumberStyles.Currency, CultureInfo.CurrentCulture.NumberFormat);
                 arr[4] = string.Format("{0:c}", amount);
 
                 item = new ListViewItem(arr);
@@ -200,6 +141,7 @@ namespace Systems
             }
 
             txtTotal.Text = string.Format("{0:c}", Total);
+            
             txtProductCode.Text = null;
             txtProductName.Text = null;
             txtQty.Text = null;
@@ -278,11 +220,11 @@ namespace Systems
             com = new SqlCommand("spsetImports", db.con);
             com.CommandType = CommandType.StoredProcedure;
 
-            SqlParameter pImport = new SqlParameter();
-            pImport.ParameterName = "@IMaster";
-            pImport.SqlDbType = SqlDbType.Structured;
-            pImport.Value = dtMaster;
-            com.Parameters.Add(pImport);
+            SqlParameter pMaster = new SqlParameter();
+            pMaster.ParameterName = "@IMaster";
+            pMaster.SqlDbType = SqlDbType.Structured;
+            pMaster.Value = dtMaster;
+            com.Parameters.Add(pMaster);
 
             SqlParameter pDetail = new SqlParameter();
             pDetail.ParameterName = "@IDetail";
@@ -292,10 +234,11 @@ namespace Systems
 
             com.ExecuteNonQuery();
 
-
-
             MessageBox.Show("Save Success...!");
+            lisImport.Items.Clear();
+            txtTotal.Text = null;
 
         }
+
     }
 }

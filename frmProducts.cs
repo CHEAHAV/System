@@ -58,6 +58,24 @@ namespace Systems
 
         private void frmProducts_Load(object sender, EventArgs e)
         {
+            SqlCommand com = new SqlCommand("SELECT dbo.fnCountProduct()", db.con);
+
+            var n = com.ExecuteScalar();
+            txtProductsNumber.Text = n.ToString();
+
+            com = new SqlCommand("spST", db.con);
+            com.CommandType = CommandType.StoredProcedure;
+
+            com.Parameters.Add("@S", SqlDbType.Int).Direction = ParameterDirection.Output;
+            com.Parameters.Add("@T", SqlDbType.Float).Direction = ParameterDirection.Output;
+
+            com.ExecuteNonQuery();
+            
+            var s = int.Parse(com.Parameters["@S"].Value.ToString());
+            var t = float.Parse(com.Parameters["@T"].Value.ToString(), NumberStyles.Currency);
+
+            txtTotalofqty.Text = s.ToString();
+            txtTotalAmount.Text = t.ToString("C", CultureInfo.CurrentCulture);
 
         }
 
@@ -68,12 +86,26 @@ namespace Systems
             pos.Show();
         }
 
-        private void txtSearch_TextChanged(object sender, EventArgs e)
-        {
 
+        private void dgvProducts_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int i;
+            if (dgvProducts.RowCount > 0)
+            { 
+                i = e.RowIndex;
+                if (i < 0) return;
+
+                DataGridViewRow row = new DataGridViewRow();
+                row = dgvProducts.Rows[i];
+                txtProCode.Text = row.Cells["ProCode"].Value.ToString();
+                txtProductName.Text = row.Cells["ProName"].Value.ToString();
+                txtProductQTY.Text = row.Cells["Qty"].Value.ToString();
+                txtProductUPIS.Text = row.Cells["UPIS"].Value.ToString();
+                txtProductSUP.Text = row.Cells["SUP"].Value.ToString();
+            }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void btnSearch_Click(object sender, EventArgs e)
         {
             (dgvProducts.DataSource as DataTable).DefaultView.RowFilter = string.Format("ProName LIKE '%{0}%' OR CONVERT(ProCode, 'System.String') LIKE '{0}'", txtSearch.Text);
 
@@ -100,95 +132,6 @@ namespace Systems
             }
 
             txtSearch.Clear();
-        }
-
-        private void btnAddStaff_Click(object sender, EventArgs e)
-        {
-            var upis = Decimal.Parse(txtProductUPIS.Text, NumberStyles.Currency);
-            var sup = Decimal.Parse(txtProductSUP.Text, NumberStyles.Currency);
-
-            com = new SqlCommand("spSetProducts", db.con);
-            com.CommandType = CommandType.StoredProcedure;
-
-            com.Parameters.AddWithValue("@ProName", txtProductName.Text);
-            com.Parameters.AddWithValue("@Qty", txtProductQTY.Text);
-            com.Parameters.AddWithValue("@UPIS", upis);
-            com.Parameters.AddWithValue("@SUP", sup);
-
-            com.ExecuteNonQuery();
-            MessageBox.Show("Products Added Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            txtProCode.Clear();
-            txtProductName.Clear();
-            txtProductQTY.Clear();
-            txtProductUPIS.Clear();
-            txtProductSUP.Clear();
-
-            txtProductName.Focus();
-        }
-
-        private void dgvProducts_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int i;
-            if (dgvProducts.RowCount > 0)
-            { 
-                i = e.RowIndex;
-                if (i < 0) return;
-
-                DataGridViewRow row = new DataGridViewRow();
-                row = dgvProducts.Rows[i];
-                txtProCode.Text = row.Cells["ProCode"].Value.ToString();
-                txtProductName.Text = row.Cells["ProName"].Value.ToString();
-                txtProductQTY.Text = row.Cells["Qty"].Value.ToString();
-                txtProductUPIS.Text = row.Cells["UPIS"].Value.ToString();
-                txtProductSUP.Text = row.Cells["SUP"].Value.ToString();
-            }
-        }
-
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            var upis = Decimal.Parse(txtProductUPIS.Text, NumberStyles.Currency);
-            var sup = Decimal.Parse(txtProductSUP.Text, NumberStyles.Currency);
-
-            com = new SqlCommand("spUpdateProducts", db.con);
-            com.CommandType = CommandType.StoredProcedure;
-
-            com.Parameters.AddWithValue("@ProCode",txtProCode.Text);
-            com.Parameters.AddWithValue("@ProName", txtProductName.Text);
-            com.Parameters.AddWithValue("@Qty", txtProductQTY.Text);
-            com.Parameters.AddWithValue("@UPIS", upis);
-            com.Parameters.AddWithValue("@SUP", sup);
-            com.ExecuteNonQuery();
-            
-            MessageBox.Show("Products Update Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            
-            txtProCode.Clear();
-            txtProductName.Clear();
-            txtProductQTY.Clear();
-            txtProductUPIS.Clear();
-            txtProductSUP.Clear();
-
-            txtProductName.Focus();
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("Do you want to delete it!", "Information", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                com = new SqlCommand("spDeleteProducts", db.con);
-                com.CommandType = CommandType.StoredProcedure;
-                com.Parameters.AddWithValue("@ProCode",txtProCode.Text);
-                com.ExecuteNonQuery() ;
-
-                MessageBox.Show("Product deleted!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                txtProCode.Clear() ;
-                txtProductName.Clear();
-                txtProductQTY.Clear();
-                txtProductUPIS.Clear();
-                txtProductSUP.Clear();
-                txtProductName.Focus();
-            }
         }
     }
 }

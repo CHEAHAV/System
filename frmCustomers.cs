@@ -55,10 +55,6 @@ namespace Systems
             }
         }
 
-        private void frmCustomer_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnExitCustomer_Click(object sender, EventArgs e)
         {
