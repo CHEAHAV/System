@@ -152,13 +152,27 @@ namespace Systems
                 {
                     radMale.Checked = true;
                 }
-                dtpdob.Value = DateTime.Parse(row.Cells["Dob"].Value.ToString());
-                //dtpdob.CustomFormat = "dd/MM/yyyy";
-                //dtpdob.Text = row.Cells["Dob"].Value.ToString();
-                
+                if (row.Cells["Dob"].Value != null && row.Cells["Dob"].Value != DBNull.Value)
+                {
+                    if (DateTime.TryParse(row.Cells["Dob"].Value.ToString(), out DateTime dob))
+                    {
+                        dtpdob.Value = dob;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid date format for DOB. Using current date.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        dtpdob.Value = DateTime.Now; // Default to current date if parsing fails
+                    }
+                }
+                else
+                {
+                    dtpdob.Value = DateTime.Now; // Default to current date if null
+                }
+
+
                 cmbStaffPosition.Text = row.Cells["Position"].Value.ToString();
                 txtStaffSalary.Text = row.Cells["Salary"].Value.ToString();
-                
+
                 if (row.Cells["Photos"].Value != DBNull.Value)
                 {
                     byte[] img = (byte[])row.Cells["Photos"].Value;
@@ -169,6 +183,10 @@ namespace Systems
                 {
                     picStaff.Image = null;
                 }
+            }
+            else
+            { 
+                MessageBox.Show("No data available", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -226,6 +244,11 @@ namespace Systems
         }
 
         private void btnViewStaff_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmStaffs_Load(object sender, EventArgs e)
         {
 
         }

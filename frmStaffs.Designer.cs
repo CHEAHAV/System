@@ -449,6 +449,7 @@
             this.Name = "frmStaffs";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Staffs";
+            this.Load += new System.EventHandler(this.frmStaffs_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStaff)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStaff)).EndInit();
             this.ResumeLayout(false);

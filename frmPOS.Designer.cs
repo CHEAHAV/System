@@ -88,7 +88,7 @@
             // 
             this.btnSuppliers.BackColor = System.Drawing.Color.Lime;
             this.btnSuppliers.Font = new System.Drawing.Font("Khmer OS Battambang", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSuppliers.Image = global::Systems.Properties.Resources.supplier;
+            this.btnSuppliers.Image = global::Systems.Properties.Resources.supplier1;
             this.btnSuppliers.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnSuppliers.Location = new System.Drawing.Point(213, 351);
             this.btnSuppliers.Name = "btnSuppliers";
