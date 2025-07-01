@@ -145,7 +145,7 @@
             this.txtGmail.Location = new System.Drawing.Point(438, 181);
             this.txtGmail.Multiline = true;
             this.txtGmail.Name = "txtGmail";
-            this.txtGmail.Size = new System.Drawing.Size(164, 41);
+            this.txtGmail.Size = new System.Drawing.Size(238, 41);
             this.txtGmail.TabIndex = 32;
             // 
             // label4

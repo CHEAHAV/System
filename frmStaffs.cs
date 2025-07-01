@@ -131,6 +131,70 @@ namespace Systems
         private void btnSearchStaff_Click(object sender, EventArgs e)
         {
             (dgvStaff.DataSource as DataTable).DefaultView.RowFilter = string.Format("FullName LIKE '%{0}%' OR CONVERT(staffID, 'System.String') LIKE '%{0}%' OR (Gen LIKE '%{0}%')", txtSearch.Text);
+
+            int i;
+            if (dgvStaff.Rows.Count > 0 && dgvStaff.CurrentRow != null)
+            {
+                i = dgvStaff.CurrentRow.Index;
+
+                DataGridViewRow row = dgvStaff.Rows[i];
+                txtStaffId.Text = row.Cells["staffID"].Value.ToString();
+                txtStaffFullName.Text = row.Cells["FullName"].Value.ToString();
+                if (row.Cells["Gen"].Value.ToString() == "F")
+                {
+                    radFemale.Checked = true;
+                }
+                else
+                {
+                    radMale.Checked = true;
+                }
+                if (row.Cells["Dob"].Value != null && row.Cells["Dob"].Value != DBNull.Value)
+                {
+                    if (DateTime.TryParse(row.Cells["Dob"].Value.ToString(), out DateTime dob))
+                    {
+                        dtpdob.Value = dob;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid date format for DOB. Using current date.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        dtpdob.Value = DateTime.Now; // Default to current date if parsing fails
+                    }
+                }
+                else
+                {
+                    dtpdob.Value = DateTime.Now; // Default to current date if null
+                }
+
+
+                cmbStaffPosition.Text = row.Cells["Position"].Value.ToString();
+                txtStaffSalary.Text = row.Cells["Salary"].Value.ToString();
+
+                if (row.Cells["Photos"].Value != DBNull.Value)
+                {
+                    byte[] img = (byte[])row.Cells["Photos"].Value;
+                    MemoryStream ms = new MemoryStream(img);
+                    picStaff.Image = Image.FromStream(ms);
+                }
+                else
+                {
+                    picStaff.Image = null;
+                }
+                txtSearch.Text = null;
+            }
+            else
+            {
+                txtSearch.Text = null;
+                txtStaffId.Clear();
+                txtStaffFullName.Clear();
+                radMale.Checked = false;
+                radFemale.Checked = false;
+                dtpdob.Value = DateTime.Now; // Default to current date if no data found
+                cmbStaffPosition.SelectedIndex = -1; // Clear the selection
+                txtStaffSalary.Clear();
+                picStaff.Image = null; // Clear the image
+                MessageBox.Show("No data found", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
         }
 
         private void dgvStaff_CellClick(object sender, DataGridViewCellEventArgs e)
