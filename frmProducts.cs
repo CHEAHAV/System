@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
+using System.IO;
 
 namespace Systems
 {
@@ -21,6 +22,8 @@ namespace Systems
         SqlDataAdapter dap;
         DataTable dt;
 
+        string fp;
+        byte[] photos;
         public frmProducts()
         {
             InitializeComponent();
@@ -40,8 +43,34 @@ namespace Systems
             dap = new SqlDataAdapter(com);
             dt = new DataTable();
             dap.Fill(dt);
-
             dgvProducts.DataSource = dt;
+            if (dgvProducts.Rows.Count > 0)
+            {
+                txtProCode.Text = dgvProducts.Rows[0].Cells["ProCode"].Value.ToString();
+                txtProductName.Text = dgvProducts.Rows[0].Cells["ProName"].Value.ToString();
+                
+                if (dgvProducts.Rows[0].Cells["Picture"].Value != DBNull.Value)
+                {
+                    byte[] pic = (byte[])dgvProducts.Rows[0].Cells["Picture"].Value;
+                    MemoryStream ms = new MemoryStream(pic);
+                    picProducts.Image = Image.FromStream(ms);
+                }
+                else
+                {
+                    picProducts.Image = null;
+                
+                }
+                txtProductQTY.Text = dgvProducts.Rows[0].Cells["Qty"].Value.ToString();
+                txtProductUPIS.Text = dgvProducts.Rows[0].Cells["UPIS"].Value.ToString();
+                txtProductSUP.Text = dgvProducts.Rows[0].Cells["SUP"].Value.ToString();
+            }
+
+            dgvProducts.DefaultCellStyle.Font = new Font("Khmer OS Battambang", 12, FontStyle.Regular);
+            DataGridViewImageColumn img = new DataGridViewImageColumn();
+            img = (DataGridViewImageColumn)dgvProducts.Columns["Picture"];
+            img.ImageLayout = DataGridViewImageCellLayout.Stretch;
+
+
         }
 
         public void OnChange(object sender, SqlNotificationEventArgs e)
@@ -102,6 +131,18 @@ namespace Systems
                 txtProductQTY.Text = row.Cells["Qty"].Value.ToString();
                 txtProductUPIS.Text = row.Cells["UPIS"].Value.ToString();
                 txtProductSUP.Text = row.Cells["SUP"].Value.ToString();
+
+                if (row.Cells["Picture"].Value != DBNull.Value)
+                {
+                    byte[] img = (byte[])row.Cells["Picture"].Value;
+                    MemoryStream ms = new MemoryStream(img);
+                    picProducts.Image = Image.FromStream(ms);
+                }
+                else
+                {
+                    picProducts.Image = null;
+                }
+
             }
         }
 
@@ -121,6 +162,17 @@ namespace Systems
                 txtProductQTY.Text = row.Cells["Qty"].Value.ToString();
                 txtProductUPIS.Text = row.Cells["UPIS"].Value.ToString();
                 txtProductSUP.Text = row.Cells["SUP"].Value.ToString();
+
+                if (row.Cells["Picture"].Value != DBNull.Value)
+                {
+                    byte[] img = (byte[])row.Cells["Picture"].Value;
+                    MemoryStream ms = new MemoryStream(img);
+                    picProducts.Image = Image.FromStream(ms);
+                }
+                else
+                {
+                    picProducts.Image = null;
+                }
             }
             else
             {

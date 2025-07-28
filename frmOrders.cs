@@ -23,6 +23,8 @@ namespace Systems
         DataTable dt;
         decimal Total = 0;
 
+        byte[] photos;
+
         public frmOrders()
         {
             InitializeComponent();
@@ -84,6 +86,7 @@ namespace Systems
             lisOrders.MultiSelect = false; // Allow only one item to be selected
             lisOrders.Columns.Add("Product's Code", 200);
             lisOrders.Columns.Add("Product's Name", 200);
+            lisOrders.Columns.Add("Picture", 200);
             lisOrders.Columns.Add("Quantity", 110);
             lisOrders.Columns.Add("Price", 100);
             lisOrders.Columns.Add("Amount", 200);
@@ -118,7 +121,18 @@ namespace Systems
                 while (dr.Read())
                 {
                     txtUnitPrice.Text = string.Format("{0:c}", Decimal.Parse(dr["SUP"].ToString()));
-
+                    if (!dr.IsDBNull(2)) // Photos column
+                    {
+                        photos = (byte[])dr[2];
+                        using (MemoryStream ms = new MemoryStream(photos))
+                        {
+                            picOrder.Image = Image.FromStream(ms);
+                        }
+                    }
+                    else
+                    {
+                        picOrder.Image = null; // No image
+                    }
                 }
             }
             else
@@ -156,14 +170,15 @@ namespace Systems
             else
             {
                 ListViewItem item;
-                string[] arr = new string[5];
+                string[] arr = new string[6];
                 arr[0] = txtProductCode.Text;
                 arr[1] = cboProductName.Text;
-                arr[2] = txtQty.Text;
+                arr[2] = photos != null && photos.Length > 0 ? "Image" : "no-image"; // Placeholder for ListView
+                arr[3] = txtQty.Text;
                 s = decimal.Parse(txtUnitPrice.Text, NumberStyles.Currency, CultureInfo.CurrentCulture.NumberFormat);
-                arr[3] = string.Format("{0:c}", s);
+                arr[4] = string.Format("{0:c}", s);
                 amount = decimal.Parse(txtQty.Text) * decimal.Parse(txtUnitPrice.Text, NumberStyles.Currency, CultureInfo.CurrentCulture.NumberFormat);
-                arr[4] = string.Format("{0:c}", amount);
+                arr[5] = string.Format("{0:c}", amount);
 
                 item = new ListViewItem(arr);
                 lisOrders.Items.Add(item);
@@ -219,6 +234,7 @@ namespace Systems
             DataTable dtDetail = new DataTable();
             dtDetail.Columns.Add("ProCode", typeof(string));
             dtDetail.Columns.Add("ProName", typeof(string));
+            dtDetail.Columns.Add("Picture", typeof(byte[]));
             dtDetail.Columns.Add("Qty", typeof(int));
             dtDetail.Columns.Add("Price", typeof(float));
             dtDetail.Columns.Add("Amount", typeof(float));
@@ -227,11 +243,21 @@ namespace Systems
             {
                 string pCode = item.Text;
                 string pName = item.SubItems[1].Text;
-                int qty = int.Parse(item.SubItems[2].Text);
-                float price = float.Parse(item.SubItems[3].Text, NumberStyles.Currency);
-                float amount = float.Parse(item.SubItems[4].Text, NumberStyles.Currency);
+                string picturePath = item.SubItems[2].Text;
+                byte[] pictureData;
+                if (picturePath == "no-image" || !File.Exists(picturePath))
+                {
+                    pictureData = new byte[0]; // or DBNull.Value if you want to allow NULL
+                }
+                else
+                {
+                    pictureData = File.ReadAllBytes(picturePath);
+                }
+                int qty = int.Parse(item.SubItems[3].Text);
+                float price = float.Parse(item.SubItems[4].Text, NumberStyles.Currency);
+                float amount = float.Parse(item.SubItems[5].Text, NumberStyles.Currency);
 
-                dtDetail.Rows.Add(pCode, pName, qty, price, amount);
+                dtDetail.Rows.Add(pCode, pName,pictureData, qty, price, amount);
             }
 
             com = new SqlCommand("spsetOrders", db.con);

@@ -57,6 +57,8 @@
             this.btnRemove = new System.Windows.Forms.Button();
             this.btnExitOrder = new System.Windows.Forms.Button();
             this.btnAddOrders = new System.Windows.Forms.Button();
+            this.picOrder = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.picOrder)).BeginInit();
             this.SuspendLayout();
             // 
             // dateOrders
@@ -142,7 +144,7 @@
             this.label2.Font = new System.Drawing.Font("CollegiateFLF", 27.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(0, -1);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(868, 88);
+            this.label2.Size = new System.Drawing.Size(1014, 88);
             this.label2.TabIndex = 80;
             this.label2.Text = "Order Products";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -151,7 +153,7 @@
             // 
             this.txtOrderTotal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.txtOrderTotal.Font = new System.Drawing.Font("Khmer OS Battambang", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtOrderTotal.Location = new System.Drawing.Point(460, 765);
+            this.txtOrderTotal.Location = new System.Drawing.Point(572, 765);
             this.txtOrderTotal.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtOrderTotal.Multiline = true;
             this.txtOrderTotal.Name = "txtOrderTotal";
@@ -163,7 +165,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(364, 768);
+            this.label7.Location = new System.Drawing.Point(478, 774);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(82, 25);
             this.label7.TabIndex = 99;
@@ -276,7 +278,7 @@
             this.lisOrders.HideSelection = false;
             this.lisOrders.Location = new System.Drawing.Point(25, 549);
             this.lisOrders.Name = "lisOrders";
-            this.lisOrders.Size = new System.Drawing.Size(815, 201);
+            this.lisOrders.Size = new System.Drawing.Size(979, 201);
             this.lisOrders.TabIndex = 130;
             this.lisOrders.UseCompatibleStateImageBehavior = false;
             // 
@@ -296,7 +298,7 @@
             this.label12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label12.Location = new System.Drawing.Point(25, 480);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(815, 65);
+            this.label12.Size = new System.Drawing.Size(979, 65);
             this.label12.TabIndex = 133;
             // 
             // btnSave
@@ -305,7 +307,7 @@
             this.btnSave.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(692, 485);
+            this.btnSave.Location = new System.Drawing.Point(827, 485);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(135, 55);
@@ -321,7 +323,7 @@
             this.btnViewOrders.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnViewOrders.Image = ((System.Drawing.Image)(resources.GetObject("btnViewOrders.Image")));
             this.btnViewOrders.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnViewOrders.Location = new System.Drawing.Point(37, 485);
+            this.btnViewOrders.Location = new System.Drawing.Point(61, 485);
             this.btnViewOrders.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnViewOrders.Name = "btnViewOrders";
             this.btnViewOrders.Size = new System.Drawing.Size(135, 55);
@@ -336,7 +338,7 @@
             this.btnRemove.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRemove.Image = ((System.Drawing.Image)(resources.GetObject("btnRemove.Image")));
             this.btnRemove.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRemove.Location = new System.Drawing.Point(253, 485);
+            this.btnRemove.Location = new System.Drawing.Point(289, 485);
             this.btnRemove.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(155, 55);
@@ -352,7 +354,7 @@
             this.btnExitOrder.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExitOrder.Image = ((System.Drawing.Image)(resources.GetObject("btnExitOrder.Image")));
             this.btnExitOrder.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExitOrder.Location = new System.Drawing.Point(705, 759);
+            this.btnExitOrder.Location = new System.Drawing.Point(869, 759);
             this.btnExitOrder.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnExitOrder.Name = "btnExitOrder";
             this.btnExitOrder.Size = new System.Drawing.Size(135, 55);
@@ -368,7 +370,7 @@
             this.btnAddOrders.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddOrders.Image = ((System.Drawing.Image)(resources.GetObject("btnAddOrders.Image")));
             this.btnAddOrders.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAddOrders.Location = new System.Drawing.Point(483, 485);
+            this.btnAddOrders.Location = new System.Drawing.Point(572, 485);
             this.btnAddOrders.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnAddOrders.Name = "btnAddOrders";
             this.btnAddOrders.Size = new System.Drawing.Size(135, 55);
@@ -378,12 +380,25 @@
             this.btnAddOrders.UseVisualStyleBackColor = false;
             this.btnAddOrders.Click += new System.EventHandler(this.btnAddOrders_Click);
             // 
+            // picOrder
+            // 
+            this.picOrder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.picOrder.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.picOrder.Location = new System.Drawing.Point(846, 255);
+            this.picOrder.Name = "picOrder";
+            this.picOrder.Size = new System.Drawing.Size(158, 198);
+            this.picOrder.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picOrder.TabIndex = 134;
+            this.picOrder.TabStop = false;
+            this.picOrder.Tag = "Photos";
+            // 
             // frmOrders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(868, 835);
+            this.ClientSize = new System.Drawing.Size(1014, 835);
             this.ControlBox = false;
+            this.Controls.Add(this.picOrder);
             this.Controls.Add(this.cboProductName);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.lisOrders);
@@ -418,6 +433,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmOrders";
             this.Load += new System.EventHandler(this.frmOrders_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.picOrder)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -452,5 +468,6 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.ComboBox cboProductName;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.PictureBox picOrder;
     }
 }

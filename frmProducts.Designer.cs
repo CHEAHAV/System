@@ -50,7 +50,9 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.picProducts = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picProducts)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSearch
@@ -86,6 +88,7 @@
             this.dgvProducts.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dgvProducts.Name = "dgvProducts";
             this.dgvProducts.RowHeadersWidth = 50;
+            this.dgvProducts.RowTemplate.Height = 70;
             this.dgvProducts.Size = new System.Drawing.Size(577, 206);
             this.dgvProducts.TabIndex = 83;
             this.dgvProducts.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProducts_CellClick);
@@ -115,7 +118,7 @@
             this.txtProductSUP.Multiline = true;
             this.txtProductSUP.Name = "txtProductSUP";
             this.txtProductSUP.ReadOnly = true;
-            this.txtProductSUP.Size = new System.Drawing.Size(97, 42);
+            this.txtProductSUP.Size = new System.Drawing.Size(119, 42);
             this.txtProductSUP.TabIndex = 77;
             // 
             // txtProductUPIS
@@ -127,7 +130,7 @@
             this.txtProductUPIS.Multiline = true;
             this.txtProductUPIS.Name = "txtProductUPIS";
             this.txtProductUPIS.ReadOnly = true;
-            this.txtProductUPIS.Size = new System.Drawing.Size(97, 42);
+            this.txtProductUPIS.Size = new System.Drawing.Size(119, 42);
             this.txtProductUPIS.TabIndex = 76;
             // 
             // label1
@@ -161,7 +164,7 @@
             this.txtProductQTY.Multiline = true;
             this.txtProductQTY.Name = "txtProductQTY";
             this.txtProductQTY.ReadOnly = true;
-            this.txtProductQTY.Size = new System.Drawing.Size(97, 42);
+            this.txtProductQTY.Size = new System.Drawing.Size(119, 42);
             this.txtProductQTY.TabIndex = 73;
             // 
             // txtProductName
@@ -305,12 +308,25 @@
             this.label9.Text = "Total Amount";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // picProducts
+            // 
+            this.picProducts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.picProducts.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.picProducts.Location = new System.Drawing.Point(453, 94);
+            this.picProducts.Name = "picProducts";
+            this.picProducts.Size = new System.Drawing.Size(158, 198);
+            this.picProducts.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picProducts.TabIndex = 96;
+            this.picProducts.TabStop = false;
+            this.picProducts.Tag = "Photos";
+            // 
             // frmProducts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(632, 830);
             this.ControlBox = false;
+            this.Controls.Add(this.picProducts);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -338,6 +354,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.frmProducts_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picProducts)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -366,5 +383,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.PictureBox picProducts;
     }
 }

@@ -57,6 +57,9 @@
             this.btnRemove = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.picImports = new System.Windows.Forms.PictureBox();
+            this.btnImportsBrows = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.picImports)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -66,7 +69,7 @@
             this.label2.Font = new System.Drawing.Font("CollegiateFLF", 27.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(1, 1);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(746, 73);
+            this.label2.Size = new System.Drawing.Size(923, 73);
             this.label2.TabIndex = 79;
             this.label2.Text = "Imports";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -218,6 +221,7 @@
             this.txtProductCode.Name = "txtProductCode";
             this.txtProductCode.Size = new System.Drawing.Size(93, 42);
             this.txtProductCode.TabIndex = 118;
+            this.txtProductCode.TextChanged += new System.EventHandler(this.txtProductCode_TextChanged);
             this.txtProductCode.Leave += new System.EventHandler(this.txtProductCode_Leave);
             // 
             // txtProductName
@@ -251,7 +255,7 @@
             // 
             this.txtTotal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.txtTotal.Font = new System.Drawing.Font("Khmer OS Battambang", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTotal.Location = new System.Drawing.Point(399, 700);
+            this.txtTotal.Location = new System.Drawing.Point(439, 707);
             this.txtTotal.Multiline = true;
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.ReadOnly = true;
@@ -262,7 +266,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(311, 708);
+            this.label11.Location = new System.Drawing.Point(351, 715);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(82, 25);
             this.label11.TabIndex = 122;
@@ -273,7 +277,7 @@
             this.lisImport.HideSelection = false;
             this.lisImport.Location = new System.Drawing.Point(14, 531);
             this.lisImport.Name = "lisImport";
-            this.lisImport.Size = new System.Drawing.Size(716, 159);
+            this.lisImport.Size = new System.Drawing.Size(894, 159);
             this.lisImport.TabIndex = 126;
             this.lisImport.UseCompatibleStateImageBehavior = false;
             this.lisImport.Click += new System.EventHandler(this.lisImport_Click);
@@ -340,7 +344,7 @@
             this.btnExit.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExit.Image = ((System.Drawing.Image)(resources.GetObject("btnExit.Image")));
             this.btnExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExit.Location = new System.Drawing.Point(580, 700);
+            this.btnExit.Location = new System.Drawing.Point(750, 701);
             this.btnExit.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(150, 55);
@@ -366,12 +370,42 @@
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
+            // picImports
+            // 
+            this.picImports.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.picImports.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.picImports.Location = new System.Drawing.Point(750, 233);
+            this.picImports.Name = "picImports";
+            this.picImports.Size = new System.Drawing.Size(158, 198);
+            this.picImports.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picImports.TabIndex = 129;
+            this.picImports.TabStop = false;
+            this.picImports.Tag = "Photos";
+            // 
+            // btnImportsBrows
+            // 
+            this.btnImportsBrows.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.btnImportsBrows.Font = new System.Drawing.Font("Century Schoolbook", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnImportsBrows.Image = ((System.Drawing.Image)(resources.GetObject("btnImportsBrows.Image")));
+            this.btnImportsBrows.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnImportsBrows.Location = new System.Drawing.Point(750, 463);
+            this.btnImportsBrows.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.btnImportsBrows.Name = "btnImportsBrows";
+            this.btnImportsBrows.Size = new System.Drawing.Size(158, 55);
+            this.btnImportsBrows.TabIndex = 130;
+            this.btnImportsBrows.Text = "Brows";
+            this.btnImportsBrows.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnImportsBrows.UseVisualStyleBackColor = false;
+            this.btnImportsBrows.Click += new System.EventHandler(this.btnImportsBrows_Click);
+            // 
             // frmImports
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(747, 771);
+            this.ClientSize = new System.Drawing.Size(923, 771);
             this.ControlBox = false;
+            this.Controls.Add(this.btnImportsBrows);
+            this.Controls.Add(this.picImports);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.lisImport);
             this.Controls.Add(this.txtTotal);
@@ -406,6 +440,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmImports";
             this.Load += new System.EventHandler(this.frmImports_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.picImports)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -440,5 +475,7 @@
         private System.Windows.Forms.ListView lisImport;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.PictureBox picImports;
+        private System.Windows.Forms.Button btnImportsBrows;
     }
 }

@@ -47,6 +47,49 @@ namespace Systems
             dgvStaff.DataSource = dt;
 
 
+            txtStaffId.Text = dgvStaff.Rows[0].Cells["staffID"].Value.ToString();
+            txtStaffFullName.Text = dgvStaff.Rows[0].Cells["FullName"].Value.ToString();
+            if (dgvStaff.Rows[0].Cells["Gen"].Value.ToString() == "F")
+            {
+                radFemale.Checked = true;
+            }
+            else
+            {
+                radMale.Checked = true;
+            }
+            if (dgvStaff.Rows[0].Cells["Dob"].Value != null && dgvStaff.Rows[0].Cells["Dob"].Value != DBNull.Value)
+            {
+                if (DateTime.TryParse(dgvStaff.Rows[0].Cells["Dob"].Value.ToString(), out DateTime dob))
+                {
+                    dtpdob.Value = dob;
+                }
+                else
+                {
+                    MessageBox.Show("Invalid date format for DOB. Using current date.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    dtpdob.Value = DateTime.Now; // Default to current date if parsing fails
+                }
+            }
+            else
+            {
+                dtpdob.Value = DateTime.Now; // Default to current date if null
+            }
+
+
+            cmbStaffPosition.Text = dgvStaff.Rows[0].Cells["Position"].Value.ToString();
+            txtStaffSalary.Text = dgvStaff.Rows[0].Cells["Salary"].Value.ToString();
+
+            if (dgvStaff.Rows[0].Cells["Photos"].Value != DBNull.Value)
+            {
+                byte[] pho = (byte[])dgvStaff.Rows[0].Cells["Photos"].Value;
+                MemoryStream ms = new MemoryStream(pho);
+                picStaff.Image = Image.FromStream(ms);
+            }
+            else
+            {
+                picStaff.Image = null;
+            }
+            txtSearch.Text = null;
+
             dgvStaff.ColumnHeadersDefaultCellStyle.Font = new Font("Century Schoolbook", 12, FontStyle.Bold);
             dgvStaff.DefaultCellStyle.Font = new Font("Khmer OS Battambang", 12, FontStyle.Regular);
             dgvStaff.Columns["staffID"].Width = 70;
@@ -300,6 +343,14 @@ namespace Systems
                 com.Parameters.AddWithValue("@staffID", txtStaffId.Text);
                 com.ExecuteNonQuery();
                 MessageBox.Show("Staff Deleted Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtStaffId.Clear();
+                txtStaffFullName.Clear();
+                radMale.Checked = false;
+                radFemale.Checked = false;
+                dtpdob.Value = DateTime.Now; // Default to current date if no data found
+                cmbStaffPosition.SelectedIndex = -1; // Clear the selection
+                txtStaffSalary.Clear();
+                picStaff.Image = null; // Clear the image
             }
             else
             {
